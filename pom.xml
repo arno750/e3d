@@ -1,0 +1,126 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>fr.arno750</groupId>
+  <artifactId>e3d</artifactId>
+  <version>3.0.0</version>
+  <name>e3d</name>
+
+  <properties>
+    <maven.compiler.target>11</maven.compiler.target>
+    <maven.compiler.source>11</maven.compiler.source>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.toedter</groupId>
+      <artifactId>jcalendar</artifactId>
+      <version>1.4</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>buildnumber-maven-plugin</artifactId>
+          <version>1.4</version>
+          <configuration>
+            <revisionOnScmFailure>no.scm.config.in.pom</revisionOnScmFailure>
+          </configuration>
+          <executions>
+            <execution>
+              <id>create-timestamp-id</id>
+              <phase>validate</phase>
+              <goals>
+                <goal>create-timestamp</goal>
+              </goals>
+              <configuration>
+                <timestampFormat>yyyy-MM-dd HH:mm:ss.S</timestampFormat>
+                <timestampPropertyName>buildNumber</timestampPropertyName>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>copy-dependencies</id>
+              <phase>prepare-package</phase>
+              <goals>
+                <goal>copy-dependencies</goal>
+              </goals>
+              <configuration>
+                <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                <overWriteReleases>false</overWriteReleases>
+                <overWriteSnapshots>false</overWriteSnapshots>
+                <overWriteIfNewer>true</overWriteIfNewer>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>2.1</version>
+          <configuration>
+            <outputDirectory>/home/arnaud/Documents/Gem/lib</outputDirectory>
+            <archive>
+              <manifest>
+                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                <addClasspath>true</addClasspath>
+                <classpathPrefix>lib/</classpathPrefix>
+                <mainClass>e3d.Application</mainClass>
+              </manifest>
+              <manifestEntries>
+                <Implementation-Build>${buildNumber}</Implementation-Build>
+              </manifestEntries>
+            </archive>
+          </configuration>
+        </plugin>
+
+        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>
+      							buildnumber-maven-plugin
+      						</artifactId>
+                    <versionRange>[1.4,)</versionRange>
+                    <goals>
+                      <goal>create-timestamp</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore></ignore>
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>buildnumber-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
