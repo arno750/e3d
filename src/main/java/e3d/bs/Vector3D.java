@@ -113,11 +113,6 @@ public class Vector3D {
 		return abac;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return String.format("[%.1f, %.1f, %.1f]", i, j, k);
