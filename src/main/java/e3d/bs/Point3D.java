@@ -49,24 +49,23 @@ public class Point3D {
 	/**
 	 * @param m
 	 */
-	public void apply(Matrix m) {
+	public void multiply(Matrix m) {
 		double tx = m.m00 * x + m.m01 * y + m.m02 * z + m.m03;
 		double ty = m.m10 * x + m.m11 * y + m.m12 * z + m.m31;
 		double tz = m.m20 * x + m.m21 * y + m.m22 * z + m.m32;
-		x = tx;
-		y = ty;
-		z = tz;
+		this.x = tx;
+		this.y = ty;
+		this.z = tz;
 	}
 
 	/**
 	 * @param a
-	 * @param b
 	 * @return
 	 */
-	public static double getDistance(Point3D a, Point3D b) {
-		double dx = b.x - a.x;
-		double dy = b.y - a.y;
-		double dz = b.z - a.z;
+	public double getDistance(Point3D a) {
+		double dx = x - a.x;
+		double dy = y - a.y;
+		double dz = z - a.z;
 		return Math.sqrt(dx * dx + dy * dy + dz * dz);
 	}
 
@@ -74,8 +73,8 @@ public class Point3D {
 	 * @param p
 	 * @return
 	 */
-	public static double getDistance(Point3D p) {
-		return Math.sqrt(p.x * p.x + p.y * p.y + p.z * p.z);
+	public double getDistanceFromOrigin() {
+		return getDistance(ORIGIN);
 	}
 
 	/**

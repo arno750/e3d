@@ -69,32 +69,21 @@ public class Vector3D {
 	/**
 	 * @param m
 	 */
-	public void apply(Matrix m) {
+	public void multiply(Matrix m) {
 		double ti = m.m00 * i + m.m01 * j + m.m02 * k + m.m03;
 		double tj = m.m10 * i + m.m11 * j + m.m12 * k + m.m31;
 		double tk = m.m20 * i + m.m21 * j + m.m22 * k + m.m32;
-		i = ti;
-		j = tj;
-		k = tk;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return String.format("[%.1f, %.1f, %.1f]", i, j, k);
+		this.i = ti;
+		this.j = tj;
+		this.k = tk;
 	}
 
 	/**
-	 * @param a
-	 * @param b
+	 * @param v
 	 * @return
 	 */
-	public static double getDotProduct(Vector3D a, Vector3D b) {
-		return a.i * b.i + a.j * b.j + a.k * b.k;
+	public double getDotProduct(Vector3D v) {
+		return i * v.i + j * v.j + k * v.k;
 	}
 
 	/**
@@ -122,5 +111,15 @@ public class Vector3D {
 		abac.j = (b.z - a.z) * (c.x - a.x) - (b.x - a.x) * (c.z - a.z);
 		abac.k = (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
 		return abac;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return String.format("[%.1f, %.1f, %.1f]", i, j, k);
 	}
 }

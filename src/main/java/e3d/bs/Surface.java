@@ -62,7 +62,7 @@ public class Surface {
 	/**
 	 * 
 	 */
-	public void workOutParameters() {
+	public void initialize() {
 		o = new Point3D((a.p.x + b.p.x + c.p.x) / 3, (a.p.y + b.p.y + c.p.y) / 3, (a.p.z + b.p.z + c.p.z) / 3);
 		n = Vector3D.getCrossProduct(a.p, b.p, c.p);
 		n.normalize();
@@ -71,9 +71,9 @@ public class Surface {
 	/**
 	 * @param center
 	 */
-	public void updateToPointOutside(Point3D center) {
+	public void pointOutside(Point3D center) {
 		Vector3D outside = new Vector3D(center, o);
-		if (Vector3D.getDotProduct(n, outside) < 0) {
+		if (n.getDotProduct(outside) < 0) {
 			Vertex t = b;
 			b = c;
 			c = t;

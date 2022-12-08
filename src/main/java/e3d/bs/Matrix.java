@@ -12,6 +12,28 @@ public class Matrix {
 	public double m03, m13, m23, m33;
 
 	/**
+	 * @param m
+	 */
+	public void add(Matrix m) {
+		m00 += m.m00;
+		m01 += m.m01;
+		m02 += m.m02;
+		m03 += m.m03;
+		m10 += m.m10;
+		m11 += m.m11;
+		m12 += m.m12;
+		m13 += m.m13;
+		m20 += m.m20;
+		m21 += m.m21;
+		m22 += m.m22;
+		m23 += m.m23;
+		m30 += m.m30;
+		m31 += m.m31;
+		m32 += m.m32;
+		m33 += m.m33;
+	}
+
+	/**
 	 * @param j
 	 * @return
 	 */
@@ -122,6 +144,14 @@ public class Matrix {
 	}
 
 	/**
+	 * @param deg
+	 * @return
+	 */
+	private static double deg2rad(double deg) {
+		return deg / 180.0 * Math.PI;
+	}
+
+	/**
 	 * @param tx
 	 * @param ty
 	 * @param tz
@@ -133,10 +163,10 @@ public class Matrix {
 	 * @param gamma
 	 * @return
 	 */
-	public static Matrix getTransform2(double tx, double ty, double tz, double sx, double sy, double sz, double alpha,
+	public static Matrix getTransformRad(double tx, double ty, double tz, double sx, double sy, double sz, double alpha,
 			double beta, double gamma) {
 
-		return getTransform(tx, ty, tz, sx, sy, sz, Toolbox.rad(alpha), Toolbox.rad(beta), Toolbox.rad(gamma));
+		return getTransform(tx, ty, tz, sx, sy, sz, deg2rad(alpha), deg2rad(beta), deg2rad(gamma));
 	}
 
 	/**
@@ -192,11 +222,11 @@ public class Matrix {
 	}
 
 	/**
-	 * @param m
 	 * @param p
+	 * @param m
 	 * @return
 	 */
-	public static Point3D multiply(Matrix m, Point3D p) {
+	public static Point3D multiply(Point3D p, Matrix m) {
 		Point3D tp = new Point3D();
 		tp.x = m.m00 * p.x + m.m10 * p.y + m.m20 * p.z + m.m30;
 		tp.y = m.m01 * p.x + m.m11 * p.y + m.m21 * p.z + m.m31;
@@ -205,11 +235,11 @@ public class Matrix {
 	}
 
 	/**
-	 * @param m
 	 * @param v
+	 * @param m
 	 * @return
 	 */
-	public static Vector3D multiply(Matrix m, Vector3D v) {
+	public static Vector3D multiply(Vector3D v, Matrix m) {
 		Vector3D tv = new Vector3D();
 		tv.i = m.m00 * v.i + m.m10 * v.j + m.m20 * v.k;
 		tv.j = m.m01 * v.i + m.m11 * v.j + m.m21 * v.k;

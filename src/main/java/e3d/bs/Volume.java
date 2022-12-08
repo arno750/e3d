@@ -71,9 +71,9 @@ public class Volume {
 	/**
 	 * @param transform
 	 */
-	protected void apply(Matrix transform) {
+	protected void transform(Matrix transform) {
 		for (Vertex v : vertices) {
-			v.p.apply(transform);
+			v.p.multiply(transform);
 		}
 	}
 
@@ -82,17 +82,17 @@ public class Volume {
 	 */
 	protected void pointOutside(Point3D center) {
 		for (Surface s : surfaces) {
-			s.workOutParameters();
-			s.updateToPointOutside(center);
+			s.initialize();
+			s.pointOutside(center);
 		}
 	}
 
 	/**
 	 * 
 	 */
-	protected void workOutSurfaceParameters() {
+	protected void initialize() {
 		for (Surface s : surfaces)
-			s.workOutParameters();
+			s.initialize();
 	}
 
 	/**

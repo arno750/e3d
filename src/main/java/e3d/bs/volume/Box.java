@@ -38,8 +38,8 @@ public class Box extends Volume {
 		}
 
 		pointOutside(new Point3D(0.5, 0.5, 0.5));
-		apply(transform);
-		workOutSurfaceParameters();
+		transform(transform);
+		initialize();
 		workOutVertexNormals();
 	}
 }

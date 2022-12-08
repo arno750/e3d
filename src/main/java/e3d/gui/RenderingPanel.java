@@ -9,6 +9,7 @@ import java.awt.Stroke;
 
 import javax.swing.JPanel;
 
+import e3d.bs.RenderedLine;
 import e3d.bs.RenderedSurface;
 
 /**
@@ -46,7 +47,7 @@ public class RenderingPanel extends JPanel {
 	protected void paintComponent(Graphics graphics) {
 		super.paintComponent(graphics);
 
-		for (RenderedSurface s : Controller.renderer.compute()) {
+		for (RenderedSurface s : Controller.renderer.getSurfaces()) {
 			int intensity = (int) (128.0 - s.n.k * 64.0);
 			if (intensity > 255)
 				intensity = 255;
@@ -57,12 +58,16 @@ public class RenderingPanel extends JPanel {
 			polygon.addPoint(s.a.x, s.a.y);
 			polygon.addPoint(s.b.x, s.b.y);
 			polygon.addPoint(s.c.x, s.c.y);
-			graphics.fillPolygon(polygon);
+//			graphics.fillPolygon(polygon);
 
-			// graphics.setColor(Color.lightGray);
-			// graphics.drawLine(a.x, a.y, b.x, b.y);
-			// graphics.drawLine(b.x, b.y, c.x, c.y);
-			// graphics.drawLine(c.x, c.y, a.x, a.y);
+			graphics.drawLine(s.a.x, s.a.y, s.b.x, s.b.y);
+			graphics.drawLine(s.b.x, s.b.y, s.c.x, s.c.y);
+			graphics.drawLine(s.c.x, s.c.y, s.a.x, s.a.y);
+		}
+
+		for (RenderedLine l : Controller.renderer.getLines()) {
+			graphics.setColor(l.c);
+			graphics.drawLine(l.a.x, l.a.y, l.b.x, l.b.y);
 		}
 	}
 }

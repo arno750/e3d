@@ -50,12 +50,9 @@ public class MapPanel extends JPanel {
 		graphics.drawLine(o.x, o.y, oy.x, oy.y);
 
 		graphics.setColor(Color.red);
-		o = getMapProjection(Matrix.multiply(Controller.context.transform,
-				Point3D.ORIGIN));
-		Point ox = getMapProjection(Matrix.multiply(
-				Controller.context.transform, X_AXIS));
-		oy = getMapProjection(Matrix.multiply(Controller.context.transform,
-				Y_AXIS));
+		o = getMapProjection(Matrix.multiply(Point3D.ORIGIN, Controller.context.transform));
+		Point ox = getMapProjection(Matrix.multiply(X_AXIS, Controller.context.transform));
+		oy = getMapProjection(Matrix.multiply(Y_AXIS, Controller.context.transform));
 		graphics.drawLine(o.x, o.y, ox.x, ox.y);
 		graphics.drawLine(o.x, o.y, oy.x, oy.y);
 
@@ -63,12 +60,9 @@ public class MapPanel extends JPanel {
 		Scene scene = Controller.scene;
 		for (Volume volume : scene.getVolumes()) {
 			for (Surface surface : volume.getSurfaces()) {
-				Point a = getMapProjection(Matrix.multiply(
-						Controller.context.transform, surface.a.p));
-				Point b = getMapProjection(Matrix.multiply(
-						Controller.context.transform, surface.b.p));
-				Point c = getMapProjection(Matrix.multiply(
-						Controller.context.transform, surface.c.p));
+				Point a = getMapProjection(Matrix.multiply(surface.a.p, Controller.context.transform));
+				Point b = getMapProjection(Matrix.multiply(surface.b.p, Controller.context.transform));
+				Point c = getMapProjection(Matrix.multiply(surface.c.p, Controller.context.transform));
 
 				graphics.drawLine(a.x, a.y, b.x, b.y);
 				graphics.drawLine(b.x, b.y, c.x, c.y);

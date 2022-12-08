@@ -12,7 +12,6 @@ import e3d.bs.Matrix;
 import e3d.bs.Point3D;
 import e3d.bs.Renderer;
 import e3d.bs.Scene;
-import e3d.bs.Toolbox;
 import e3d.bs.Vector3D;
 
 /**
@@ -73,14 +72,25 @@ public class Controller {
 	}
 
 	/**
+	 * @param value
+	 * @return
+	 */
+	private static double getAngle(double value) {
+		if (value > 1.0)
+			return 0;
+		if (value < -1.0)
+			return 2 * Math.PI;
+		return Math.acos(value);
+	}
+
+	/**
 	 * 
 	 */
 	public static void centerContext() {
 		Vector3D headingOrigin = new Vector3D(context.observer, Point3D.ORIGIN);
 		headingOrigin.j = 0;
 		headingOrigin.normalize();
-		context.gamma = -Math.signum(headingOrigin.i)
-				* Toolbox.getAngle(Vector3D.getDotProduct(headingOrigin, Vector3D.K_AXIS));
+		context.gamma = -Math.signum(headingOrigin.i) * getAngle(headingOrigin.getDotProduct(Vector3D.K_AXIS));
 
 		if (DEBUG) {
 			System.out.format("heading: %s\n", headingOrigin);
@@ -89,8 +99,7 @@ public class Controller {
 
 		Vector3D elevationOrigin = new Vector3D(context.observer, Point3D.ORIGIN);
 		elevationOrigin.normalize();
-		context.alpha = Math.signum(elevationOrigin.j)
-				* Toolbox.getAngle(Vector3D.getDotProduct(elevationOrigin, headingOrigin));
+		context.alpha = Math.signum(elevationOrigin.j) * getAngle(elevationOrigin.getDotProduct(headingOrigin));
 
 		if (DEBUG) {
 			System.out.format("elevation: %s\n", elevationOrigin);

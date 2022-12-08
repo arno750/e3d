@@ -38,8 +38,8 @@ public class BezierPatch extends Volume {
 		System.out.println("Surfaces: " + surfaces.size());
 
 		// pointOutside(new Point3D(0, 0, 0));
-		apply(transform);
-		workOutSurfaceParameters();
+		transform(transform);
+		initialize();
 		workOutVertexNormals();
 	}
 }
