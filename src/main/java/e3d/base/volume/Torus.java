@@ -56,20 +56,20 @@ public class Torus extends Volume {
 
 				Surface s1 = new Surface(vertices.get(a), vertices.get(b),
 						vertices.get(c));
-				s1.initialize();
+				s1.computeMiddleAndNormal();
 				s1.pointOutside(centers[j]);
 				surfaces.add(s1);
 
 				Surface s2 = new Surface(vertices.get(c), vertices.get(d),
 						vertices.get(b));
-				s2.initialize();
+				s2.computeMiddleAndNormal();
 				s2.pointOutside(centers[j]);
 				surfaces.add(s2);
 			}
 		}
 
 		transform(transform);
-		initialize();
+		prepareSurfaces();
 		workOutVertexNormals();
 	}
 }

@@ -8,7 +8,7 @@ public class Scene {
 	List<Volume> volumes = new ArrayList<>();
 
 	/**
-	 * @return the volumes
+	 * @return the volumes.
 	 */
 	public List<Volume> getVolumes() {
 		return volumes;

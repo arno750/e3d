@@ -5,168 +5,165 @@ import java.util.List;
 
 public class Volume {
 
-	protected String name;
-	protected List<Vertex> vertices = new ArrayList<>();
-	protected List<Surface> surfaces = new ArrayList<>();
+    protected String name;
+    protected List<Vertex> vertices = new ArrayList<>();
+    protected List<Surface> surfaces = new ArrayList<>();
 
-	/**
-	 * 
-	 */
-	public Volume() {
-	}
+    public Volume() {
+    }
 
-	/**
-	 * @return the vertices
-	 */
-	public List<Vertex> getVertices() {
-		return vertices;
-	}
+    /**
+     * Returns the list of vertices.
+     *
+     * @return the vertices
+     */
+    public List<Vertex> getVertices() {
+        return vertices;
+    }
 
-	/**
-	 * @return the surfaces
-	 */
-	public List<Surface> getSurfaces() {
-		return surfaces;
-	}
+    /**
+     * Returns the list of surfaces.
+     *
+     * @return the surfaces
+     */
+    public List<Surface> getSurfaces() {
+        return surfaces;
+    }
 
-	/**
-	 * @param v
-	 * @return
-	 */
-	public List<Surface> getSurfaces(Vertex v) {
-		List<Surface> ss = new ArrayList<>();
-		for (Surface s : surfaces)
-			if ((s.a == v) || (s.b == v) || (s.c == v))
-				ss.add(s);
+    /**
+     * Returns the surface containing the two specified vertices and not being the given surface.
+     *
+     * @param gs surface
+     * @param v1 first vertex
+     * @param v2 second vertex
+     * @return the connected surface
+     */
+    public Surface getConnectedSurface(Surface gs, Vertex v1, Vertex v2) {
+        for (Surface s : surfaces)
+            if (s.contains(v1) || s.contains(v2))
+                if (s != gs) // tested afterwards as it seldom happens
+                    return gs;
 
-		return ss;
-	}
+        return null;
+    }
 
-	/**
-	 * @param ls
-	 * @param v1
-	 * @param v2
-	 * @return
-	 */
-	public Surface getLinkedSurface(Surface ls, Vertex v1, Vertex v2) {
-		for (Surface s : surfaces)
-			if ((s.a == v1) || (s.b == v1) || (s.c == v1) || (s.a == v2) || (s.b == v2) || (s.c == v2))
-				if (s != ls)
-					return s;
+    /**
+     * Transforms the volume using the specified matrix. The matrix is applied (by multiplication) on all the vertices.
+     *
+     * @param transform
+     */
+    protected void transform(Matrix transform) {
+        for (Vertex v : vertices) {
+            v.p.multiply(transform);
+        }
+    }
 
-		return null;
-	}
+    /**
+     * Prepares the surfaces by computing middle point and normal vector.
+     * <p>
+     * If a center point is specified, the surface will also be arranged to point towards the outside. This feature works only with convex volume.
+     *
+     * @param center the volume center
+     */
+    protected void prepareSurfaces(Point3D center) {
+        for (Surface s : surfaces) {
+            s.computeMiddleAndNormal();
+            if (center != null)
+                s.pointOutside(center);
+        }
+    }
 
-	/**
-	 * @param transform
-	 */
-	protected void transform(Matrix transform) {
-		for (Vertex v : vertices) {
-			v.p.multiply(transform);
-		}
-	}
+    /**
+     * Prepares the surfaces by computing middle point and normal vector.
+     */
+    protected void prepareSurfaces() {
+        prepareSurfaces(null);
+    }
 
-	/**
-	 * @param center
-	 */
-	protected void pointOutside(Point3D center) {
-		for (Surface s : surfaces) {
-			s.initialize();
-			s.pointOutside(center);
-		}
-	}
+    /**
+     *
+     */
+    protected void workOutVertexNormals() {
+        for (Vertex v : vertices) {
+            v.n = new Vector3D();
+            for (Surface s : surfaces) {
+                if (s.contains(v)) {
+                    double area = s.getArea();
+                    v.n.i += s.n.i * area;
+                    v.n.j += s.n.j * area;
+                    v.n.k += s.n.k * area;
+                }
+            }
+            v.n.normalize();
+        }
+    }
 
-	/**
-	 * 
-	 */
-	protected void initialize() {
-		for (Surface s : surfaces)
-			s.initialize();
-	}
+    /**
+     * @param steps
+     * @param coefficients
+     * @param data
+     * @param indices
+     */
+    public void addBezierPatch(int steps, double[][] coefficients, double[][] data, int[] indices) {
+        int start = vertices.size();
+        double coefficient;
+        for (int u = 0; u < steps; u++)
+            for (int v = 0; v < steps; v++) {
 
-	/**
-	 * 
-	 */
-	protected void workOutVertexNormals() {
-		for (Vertex v : vertices) {
-			List<Surface> ss = getSurfaces(v);
-			v.n = new Vector3D();
-			for (Surface s : ss) {
-				double area = s.getArea();
-				v.n.i += s.n.i * area;
-				v.n.j += s.n.j * area;
-				v.n.k += s.n.k * area;
-			}
-			v.n.normalize();
-		}
-	}
+                Point3D p = new Point3D();
+                int k = 0;
+                for (int i = 0; i < 4; i++)
+                    for (int j = 0; j < 4; j++) {
+                        int vi = indices[k];
+                        coefficient = coefficients[i][u] * coefficients[j][v];
+                        p.x += data[vi][0] * coefficient;
+                        p.y += data[vi][2] * coefficient;
+                        p.z += data[vi][1] * coefficient;
+                        k++;
+                    }
 
-	/**
-	 * @param steps
-	 * @param coefficients
-	 * @param data
-	 * @param indices
-	 */
-	public void addBezierPatch(int steps, double[][] coefficients, double[][] data, int[] indices) {
-		int start = vertices.size();
-		double coefficient;
-		for (int u = 0; u < steps; u++)
-			for (int v = 0; v < steps; v++) {
+                vertices.add(new Vertex(p));
+            }
 
-				Point3D p = new Point3D();
-				int k = 0;
-				for (int i = 0; i < 4; i++)
-					for (int j = 0; j < 4; j++) {
-						int vi = indices[k];
-						coefficient = coefficients[i][u] * coefficients[j][v];
-						p.x += data[vi][0] * coefficient;
-						p.y += data[vi][2] * coefficient;
-						p.z += data[vi][1] * coefficient;
-						k++;
-					}
+        for (int u = 0; u < steps - 1; u++)
+            for (int v = 0; v < steps - 1; v++) {
+                int a = start + u * steps + v;
+                int b = a + 1;
+                int c = a + steps;
+                int d = c + 1;
+                surfaces.add(new Surface(vertices.get(a), vertices.get(c), vertices.get(b)));
+                surfaces.add(new Surface(vertices.get(b), vertices.get(c), vertices.get(d)));
+            }
+    }
 
-				vertices.add(new Vertex(p));
-			}
+    /**
+     * @param steps
+     * @return
+     */
+    public double[][] getBernsteinBasisFunction(int steps) {
+        double[][] coefficients = new double[4][steps];
+        for (int i = 0; i < steps; i++) {
+            double u = i / (double) (steps - 1);
+            double u2 = u * u;
+            double v = 1.0 - u;
+            double v2 = v * v;
 
-		for (int u = 0; u < steps - 1; u++)
-			for (int v = 0; v < steps - 1; v++) {
-				int a = start + u * steps + v;
-				int b = a + 1;
-				int c = a + steps;
-				int d = c + 1;
-				surfaces.add(new Surface(vertices.get(a), vertices.get(c), vertices.get(b)));
-				surfaces.add(new Surface(vertices.get(b), vertices.get(c), vertices.get(d)));
-			}
-	}
+            coefficients[0][i] = v * v2;
+            coefficients[1][i] = 3 * u * v2;
+            coefficients[2][i] = 3 * u2 * v;
+            coefficients[3][i] = u * u2;
+        }
 
-	/**
-	 * @param steps
-	 * @return
-	 */
-	public double[][] getBernsteinBasisFunction(int steps) {
-		double[][] coefficients = new double[4][steps];
-		for (int i = 0; i < steps; i++) {
-			double u = i / (double) (steps - 1);
-			double u2 = u * u;
-			double v = 1.0 - u;
-			double v2 = v * v;
+        return coefficients;
+    }
 
-			coefficients[0][i] = v * v2;
-			coefficients[1][i] = 3 * u * v2;
-			coefficients[2][i] = 3 * u2 * v;
-			coefficients[3][i] = u * u2;
-		}
-
-		return coefficients;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder buffer = new StringBuilder();
-		buffer.append(String.format("- name: %s\n  surfaces:\n", name));
-		for (Surface s : surfaces) {
-			buffer.append(String.format("  - A%s B%s C%s\n", s.a.p, s.b.p, s.c.p));
-		}
-		return buffer.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuilder buffer = new StringBuilder();
+        buffer.append(String.format("- name: %s\n  surfaces:\n", name));
+        for (Surface s : surfaces) {
+            buffer.append(String.format("  - A%s B%s C%s\n", s.a.p, s.b.p, s.c.p));
+        }
+        return buffer.toString();
+    }
 }

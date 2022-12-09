@@ -34,7 +34,7 @@ class Vector3DTest {
 	@Test
 	void whenReverseDirection() {
 		Vector3D v = new Vector3D(1, 2, 3);
-		v.reverseDirection();
+		v.reverse();
 		assertEquals(-1, v.i);
 		assertEquals(-2, v.j);
 		assertEquals(-3, v.k);

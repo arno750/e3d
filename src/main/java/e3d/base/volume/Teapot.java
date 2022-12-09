@@ -191,7 +191,7 @@ public class Teapot extends Volume {
 			addBezierPatch(steps, coefficients, VERTICES, patch);
 
 		transform(transform);
-		initialize();
+		prepareSurfaces();
 		workOutVertexNormals();
 	}
 }

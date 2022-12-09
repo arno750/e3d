@@ -33,9 +33,9 @@ public class Box extends Volume {
 			surfaces.add(s);
 		}
 
-		pointOutside(new Point3D(0.5, 0.5, 0.5));
+		prepareSurfaces(new Point3D(0.5, 0.5, 0.5));
 		transform(transform);
-		initialize();
+		prepareSurfaces();
 		workOutVertexNormals();
 	}
 }

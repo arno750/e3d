@@ -74,9 +74,9 @@ public class Sphere extends Volume {
 			}
 		}
 
-		pointOutside(Point3D.ORIGIN);
+		prepareSurfaces(Point3D.ORIGIN);
 		transform(transform);
-		initialize();
+		prepareSurfaces();
 		workOutVertexNormals();
 	}
 }

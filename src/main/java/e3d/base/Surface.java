@@ -9,9 +9,6 @@ public class Surface {
 	public Point3D o; // triangle centroid
 	public Vector3D n; // triangle normal
 
-	/**
-	 * 
-	 */
 	public Surface() {
 	}
 
@@ -25,6 +22,16 @@ public class Surface {
 		this.a = a;
 		this.b = b;
 		this.c = c;
+	}
+
+	/**
+	 * Indicates whether this surface contains the specified vertex.
+	 *
+	 * @param v a vertex.
+	 * @return <tt>true</tt> if it does ; <tt>false</tt> otherwise.
+	 */
+	public boolean contains(Vertex v) {
+		return a.equals(v) || b.equals(v) || c.equals(v);
 	}
 
 	/**
@@ -58,10 +65,9 @@ public class Surface {
 	/**
 	 * 
 	 */
-	public void initialize() {
-		o = new Point3D((a.p.x + b.p.x + c.p.x) / 3, (a.p.y + b.p.y + c.p.y) / 3, (a.p.z + b.p.z + c.p.z) / 3);
-		n = Vector3D.getCrossProduct(a.p, b.p, c.p);
-		n.normalize();
+	public void computeMiddleAndNormal() {
+		o = Point3D.getMiddle(a.p, b.p, c.p);
+		n = Vector3D.getCrossProduct(a.p, b.p, c.p).normalize();
 	}
 
 	/**
@@ -77,8 +83,8 @@ public class Surface {
 	}
 
 	/**
-	 * @param o triangle centroid
-	 * @param n triangle normal
+	 * @param o triangle centroid.
+	 * @param n triangle normal.
 	 * @return
 	 */
 	public static boolean isVisible(Point3D o, Vector3D n) {

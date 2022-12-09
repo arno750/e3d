@@ -31,7 +31,7 @@ public class BezierPatch extends Volume {
 			addBezierPatch(steps, coefficients, VERTICES, patch);
 
 		transform(transform);
-		initialize();
+		prepareSurfaces();
 		workOutVertexNormals();
 	}
 }
