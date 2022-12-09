@@ -1,12 +1,8 @@
-package e3d.bs.volume;
+package e3d.base.volume;
 
-import e3d.bs.Matrix;
-import e3d.bs.Volume;
+import e3d.base.Matrix;
+import e3d.base.Volume;
 
-/**
- * @author Arnaud Wieland
- * 
- */
 public class Teapot extends Volume {
 
 	public static final boolean DEBUG = false;
@@ -181,7 +177,7 @@ public class Teapot extends Volume {
 			{ 0.84, -1.5, 0.075 }, { 1.5, -0.84, 0.075 },
 			{ 0.798, -1.425, 0.0 }, { 1.425, -0.798, 0.0 } };
 
-	double coefficients[][];
+	final double[][] coefficients;
 
 	/**
 	 * @param steps
@@ -194,10 +190,6 @@ public class Teapot extends Volume {
 		for (int[] patch : PATCHES)
 			addBezierPatch(steps, coefficients, VERTICES, patch);
 
-		System.out.println("Vertices: " + vertices.size());
-		System.out.println("Surfaces: " + surfaces.size());
-
-		// pointOutside(new Point3D(0, 0, 0));
 		transform(transform);
 		initialize();
 		workOutVertexNormals();

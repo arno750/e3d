@@ -5,10 +5,6 @@ import java.awt.Font;
 
 import e3d.Resources;
 
-/**
- * @author Arnaud Wieland
- * 
- */
 public class Constants {
 
 	public static Font PLAIN_DEFAULT_FONT;

@@ -1,15 +1,11 @@
-package e3d.bs.volume;
+package e3d.base.volume;
 
-import e3d.bs.Matrix;
-import e3d.bs.Point3D;
-import e3d.bs.Surface;
-import e3d.bs.Vertex;
-import e3d.bs.Volume;
+import e3d.base.Matrix;
+import e3d.base.Point3D;
+import e3d.base.Surface;
+import e3d.base.Vertex;
+import e3d.base.Volume;
 
-/**
- * @author Arnaud Wieland
- * 
- */
 public class Torus extends Volume {
 
 	/**

@@ -1,9 +1,5 @@
-package e3d.bs;
+package e3d.base;
 
-/**
- * @author Arnaud Wieland
- * 
- */
 public class Vertex {
 
 	public Point3D p;

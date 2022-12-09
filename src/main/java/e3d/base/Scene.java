@@ -1,15 +1,11 @@
-package e3d.bs;
+package e3d.base;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Arnaud Wieland
- * 
- */
 public class Scene {
 
-	List<Volume> volumes = new ArrayList<Volume>();
+	List<Volume> volumes = new ArrayList<>();
 
 	/**
 	 * @return the volumes

@@ -1,12 +1,8 @@
-package e3d.bs.volume;
+package e3d.base.volume;
 
-import e3d.bs.Matrix;
-import e3d.bs.Volume;
+import e3d.base.Matrix;
+import e3d.base.Volume;
 
-/**
- * @author Arnaud Wieland
- * 
- */
 public class BezierPatch extends Volume {
 
 	public static final boolean DEBUG = false;
@@ -21,7 +17,7 @@ public class BezierPatch extends Volume {
 			{ -3.0, 0.0, 3.0 }, { -1.0, 0.0, 3.0 }, { 1.0, 0.0, 3.0 },
 			{ 3.0, 0.0, 3.0 } };
 
-	double coefficients[][];
+	final double[][] coefficients;
 
 	/**
 	 * @param steps
@@ -34,10 +30,6 @@ public class BezierPatch extends Volume {
 		for (int[] patch : PATCHES)
 			addBezierPatch(steps, coefficients, VERTICES, patch);
 
-		System.out.println("Vertices: " + vertices.size());
-		System.out.println("Surfaces: " + surfaces.size());
-
-		// pointOutside(new Point3D(0, 0, 0));
 		transform(transform);
 		initialize();
 		workOutVertexNormals();

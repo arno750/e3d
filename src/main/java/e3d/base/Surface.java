@@ -1,9 +1,5 @@
-package e3d.bs;
+package e3d.base;
 
-/**
- * @author Arnaud Wieland
- * 
- */
 public class Surface {
 
 	public Vertex a;
@@ -81,8 +77,8 @@ public class Surface {
 	}
 
 	/**
-	 * @param triangle centroid
-	 * @param triangle normal
+	 * @param o triangle centroid
+	 * @param n triangle normal
 	 * @return
 	 */
 	public static boolean isVisible(Point3D o, Vector3D n) {

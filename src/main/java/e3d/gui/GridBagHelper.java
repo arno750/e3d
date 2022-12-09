@@ -2,10 +2,6 @@ package e3d.gui;
 
 import java.awt.GridBagConstraints;
 
-/**
- * @author Arnaud Wieland
- * 
- */
 public class GridBagHelper extends GridBagConstraints {
 
 	private static final long serialVersionUID = 1L;

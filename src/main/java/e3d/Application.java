@@ -2,10 +2,6 @@ package e3d;
 
 import e3d.gui.Controller;
 
-/**
- * @author Arnaud Wieland
- * 
- */
 public class Application {
 
 	/**

@@ -1,4 +1,4 @@
-package e3d.bs;
+package e3d.render;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -6,17 +6,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * @author Arnaud Wieland
- *
- */
+import e3d.base.Matrix;
+import e3d.base.Point3D;
+import e3d.base.Scene;
+import e3d.base.Surface;
+import e3d.base.Vector3D;
+import e3d.base.Volume;
+
 public class Renderer {
 
 	Context context;
 	Scene scene;
-
-	static Point3D X_AXIS = new Point3D(1, 0, 0);
-	static Point3D Y_AXIS = new Point3D(0, 0, 1);
 
 	/**
 	 * @param scene
@@ -33,7 +33,6 @@ public class Renderer {
 	}
 
 	/**
-	 * @param scene
 	 * @return
 	 */
 	public List<RenderedSurface> getSurfaces() {
@@ -42,10 +41,10 @@ public class Renderer {
 			for (Surface s : volume.getSurfaces()) {
 				Point3D o = Matrix.multiply(s.o, context.transform);
 				Vector3D n = Matrix.multiply(s.n, context.transform);
-				if (Surface.isVisible(o, n)) {
-					Point a = getAdjustedPoint(getScreenProjection(Matrix.multiply(s.a.p, context.transform)));
-					Point b = getAdjustedPoint(getScreenProjection(Matrix.multiply(s.b.p, context.transform)));
-					Point c = getAdjustedPoint(getScreenProjection(Matrix.multiply(s.c.p, context.transform)));
+				if (Surface.isVisible(o, n) || ! context.hiddenSurfaceRemoval) {
+					Point a = projectPoint(s.a.p);
+					Point b = projectPoint(s.b.p);
+					Point c = projectPoint(s.c.p);
 					renderedSurfaces.add(new RenderedSurface(o.getDistanceFromOrigin(), a, b, c, s.n));
 				}
 			}
@@ -60,29 +59,24 @@ public class Renderer {
 	public List<RenderedLine> getLines() {
 		List<RenderedLine> renderedLines = new ArrayList<>();
 
-		Point o = getAdjustedPoint(getScreenProjection(Matrix.multiply(Point3D.ORIGIN, context.transform)));
-		Point ox = getAdjustedPoint(getScreenProjection(Matrix.multiply(X_AXIS, context.transform)));
-		Point oy = getAdjustedPoint(getScreenProjection(Matrix.multiply(Y_AXIS, context.transform)));
+		Point o = projectPoint(Point3D.ORIGIN);
+		Point ox = projectPoint(Point3D.X_UNIT);
+		Point oy = projectPoint(Point3D.Y_UNIT);
+		Point oz = projectPoint(Point3D.Z_UNIT);
 
-		renderedLines.add(new RenderedLine(o, ox, Color.blue));
-		renderedLines.add(new RenderedLine(o, oy, Color.red));
+		renderedLines.add(new RenderedLine(o, ox, Color.red));
+		renderedLines.add(new RenderedLine(o, oy, Color.green));
+		renderedLines.add(new RenderedLine(o, oz, Color.blue));
 
 		return renderedLines;
 	}
 
 	/**
 	 * @param p
-	 * @param focal
-	 * @param resolution
 	 * @return
 	 */
-	public Point getScreenProjection(Point3D p) {
-		Point pp = new Point();
-		double divisor = (p.z != 0) ? p.z : 1;
-		pp.x = (int) (p.x * context.focal / divisor * context.resolution);
-		pp.y = (int) (p.y * context.focal / divisor * context.resolution);
-
-		return pp;
+	public Point projectPoint(Point3D p) {
+		return getAdjustedPoint(getScreenProjection(Matrix.multiply(p, context.transform)));
 	}
 
 	/**
@@ -93,5 +87,18 @@ public class Renderer {
 		p.x += context.halfWidth;
 		p.y = context.halfHeight - p.y;
 		return p;
+	}
+
+	/**
+	 * @param p
+	 * @return
+	 */
+	public Point getScreenProjection(Point3D p) {
+		Point pp = new Point();
+		double divisor = (p.z != 0) ? p.z : 1;
+		pp.x = (int) (p.x * context.focal / divisor * context.resolution);
+		pp.y = (int) (p.y * context.focal / divisor * context.resolution);
+
+		return pp;
 	}
 }

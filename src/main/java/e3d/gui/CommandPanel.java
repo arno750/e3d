@@ -1,28 +1,13 @@
 package e3d.gui;
 
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
+import com.toedter.components.JSpinField;
+import e3d.render.Context;
+
+import javax.swing.*;
+import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import com.toedter.components.JSpinField;
-
-import e3d.bs.Context;
-
-/**
- * @author Arnaud Wieland
- * 
- */
 public class CommandPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -96,21 +81,21 @@ public class CommandPanel extends JPanel {
 		constraints2.gridwidth = 1;
 		constraints2.insets = new Insets(0, 4, 0, 4);
 
-		label = new JLabel("\u03b1 (elevation)");
+		label = new JLabel("α (elevation)");
 		panel.add(label, constraints2.getNextRow());
 		ca = new JSpinField(-180, 180);
 		ca.setHorizontalAlignment(JTextField.TRAILING);
 		ca.setPreferredSize(new Dimension(70, 18));
 		panel.add(ca, constraints2.getNextColumn());
 
-		label = new JLabel("\u03b2 (bank)");
+		label = new JLabel("β (bank)");
 		panel.add(label, constraints2.getNextRow());
 		cb = new JSpinField(-180, 180);
 		cb.setPreferredSize(new Dimension(70, 18));
 		cb.setHorizontalAlignment(JTextField.TRAILING);
 		panel.add(cb, constraints2.getNextColumn());
 
-		label = new JLabel("\u03b3 (heading)");
+		label = new JLabel("γ (heading)");
 		panel.add(label, constraints2.getNextRow());
 		cg = new JSpinField(-180, 180);
 		cg.setPreferredSize(new Dimension(70, 18));
@@ -127,45 +112,29 @@ public class CommandPanel extends JPanel {
 		reset = new JButton("Reset");
 		constraints1.insets = new Insets(0, 0, 8, 0);
 		panel.add(reset, constraints2);
-		reset.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				cx.setValue(0);
-				cy.setValue(1);
-				cz.setValue(-7);
-				updateContext(true);
-			}
+		reset.addActionListener(event -> {
+			cx.setValue(0);
+			cy.setValue(1);
+			cz.setValue(-7);
+			updateContext(true);
 		});
 
 		update = new JButton("center");
 		panel.add(update, constraints2.getNextColumn());
-		update.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				updateContext(true);
-			}
-		});
+		update.addActionListener(event -> updateContext(true));
 
 		update = new JButton("update");
 		panel.add(update, constraints2.getNextColumn());
-		update.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				updateContext(false);
-			}
-		});
+		update.addActionListener(event -> updateContext(false));
 
 		autoCenter = new JCheckBox("Auto-centered");
 		panel.add(autoCenter, constraints2.getNextColumn());
 
 		updateAngles();
 
-		PropertyChangeListener propertyChangeListener = new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent event) {
-				if (event.getPropertyName().equals("value")) {
-					updateContext(autoCenter.isSelected());
-				}
+		PropertyChangeListener propertyChangeListener = event -> {
+			if (event.getPropertyName().equals("value")) {
+				updateContext(autoCenter.isSelected());
 			}
 		};
 		cx.addPropertyChangeListener(propertyChangeListener);

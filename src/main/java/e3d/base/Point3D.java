@@ -1,12 +1,11 @@
-package e3d.bs;
+package e3d.base;
 
-/**
- * @author Arnaud Wieland
- *
- */
 public class Point3D {
 
-	public static Point3D ORIGIN = new Point3D(0, 0, 0);
+	public static final Point3D ORIGIN = new Point3D(0, 0, 0);
+	public static final Point3D X_UNIT = new Point3D(1, 0, 0);
+	public static final Point3D Y_UNIT = new Point3D(0, 1, 0);
+	public static final Point3D Z_UNIT = new Point3D(0, 0, 1);
 
 	public double x, y, z;
 
@@ -50,12 +49,19 @@ public class Point3D {
 	 * @param m
 	 */
 	public void multiply(Matrix m) {
-		double tx = m.m00 * x + m.m01 * y + m.m02 * z + m.m03;
-		double ty = m.m10 * x + m.m11 * y + m.m12 * z + m.m31;
-		double tz = m.m20 * x + m.m21 * y + m.m22 * z + m.m32;
+		double tx = m.m00 * x + m.m10 * y + m.m20 * z + m.m30;
+		double ty = m.m01 * x + m.m11 * y + m.m21 * z + m.m31;
+		double tz = m.m02 * x + m.m12 * y + m.m22 * z + m.m32;
 		this.x = tx;
 		this.y = ty;
 		this.z = tz;
+	}
+
+	/**
+	 * @return
+	 */
+	public double getDistanceFromOrigin() {
+		return getDistance(ORIGIN);
 	}
 
 	/**
@@ -67,14 +73,6 @@ public class Point3D {
 		double dy = y - a.y;
 		double dz = z - a.z;
 		return Math.sqrt(dx * dx + dy * dy + dz * dz);
-	}
-
-	/**
-	 * @param p
-	 * @return
-	 */
-	public double getDistanceFromOrigin() {
-		return getDistance(ORIGIN);
 	}
 
 	/**
@@ -116,8 +114,6 @@ public class Point3D {
 			return false;
 		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y))
 			return false;
-		if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z))
-			return false;
-		return true;
+		return Double.doubleToLongBits(z) == Double.doubleToLongBits(other.z);
 	}
 }

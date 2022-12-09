@@ -1,4 +1,4 @@
-package e3d.bs;
+package e3d.render;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -9,9 +9,9 @@ import java.awt.Point;
  */
 public class RenderedLine {
 
-	public Point a;
-	public Point b;
-	public Color c;
+	public final Point a;
+	public final Point b;
+	public final Color c;
 
 	/**
 	 * @param a

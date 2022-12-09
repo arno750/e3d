@@ -1,29 +1,18 @@
-package e3d.bs;
+package e3d.base;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Arnaud Wieland
- * 
- */
 public class Volume {
 
 	protected String name;
-	protected List<Vertex> vertices = new ArrayList<Vertex>();
-	protected List<Surface> surfaces = new ArrayList<Surface>();
+	protected List<Vertex> vertices = new ArrayList<>();
+	protected List<Surface> surfaces = new ArrayList<>();
 
 	/**
 	 * 
 	 */
 	public Volume() {
-	}
-
-	/**
-	 * @param v
-	 */
-	public Volume(Volume v) {
-		this.name = v.name;
 	}
 
 	/**
@@ -45,7 +34,7 @@ public class Volume {
 	 * @return
 	 */
 	public List<Surface> getSurfaces(Vertex v) {
-		List<Surface> ss = new ArrayList<Surface>();
+		List<Surface> ss = new ArrayList<>();
 		for (Surface s : surfaces)
 			if ((s.a == v) || (s.b == v) || (s.c == v))
 				ss.add(s);

@@ -1,15 +1,55 @@
-package e3d.bs;
+package e3d.base;
 
-/**
- * @author Arnaud Wieland
- * 
- */
 public class Matrix {
 
 	public double m00, m10, m20, m30;
 	public double m01, m11, m21, m31;
 	public double m02, m12, m22, m32;
 	public double m03, m13, m23, m33;
+
+	/**
+	 * 
+	 */
+	public Matrix() {
+	}
+
+	/**
+	 * @param m00
+	 * @param m10
+	 * @param m20
+	 * @param m30
+	 * @param m01
+	 * @param m11
+	 * @param m21
+	 * @param m31
+	 * @param m02
+	 * @param m12
+	 * @param m22
+	 * @param m32
+	 * @param m03
+	 * @param m13
+	 * @param m23
+	 * @param m33
+	 */
+	public Matrix(double m00, double m10, double m20, double m30, double m01, double m11, double m21, double m31,
+			double m02, double m12, double m22, double m32, double m03, double m13, double m23, double m33) {
+		this.m00 = m00;
+		this.m10 = m10;
+		this.m20 = m20;
+		this.m30 = m30;
+		this.m01 = m01;
+		this.m11 = m11;
+		this.m21 = m21;
+		this.m31 = m31;
+		this.m02 = m02;
+		this.m12 = m12;
+		this.m22 = m22;
+		this.m32 = m32;
+		this.m03 = m03;
+		this.m13 = m13;
+		this.m23 = m23;
+		this.m33 = m33;
+	}
 
 	/**
 	 * @param m
@@ -34,7 +74,6 @@ public class Matrix {
 	}
 
 	/**
-	 * @param j
 	 * @return
 	 */
 	public static Matrix getIdentify() {
@@ -138,9 +177,7 @@ public class Matrix {
 		Matrix mrh = Matrix.getHeadingRotation(gamma);
 		Matrix ms = Matrix.getScaling(sx, sy, sz);
 
-		Matrix transform = Matrix.multiply(mra, Matrix.multiply(mrb, Matrix.multiply(mrh, Matrix.multiply(mt, ms))));
-
-		return transform;
+		return Matrix.multiply(mra, Matrix.multiply(mrb, Matrix.multiply(mrh, Matrix.multiply(mt, ms))));
 	}
 
 	/**
@@ -196,8 +233,8 @@ public class Matrix {
 	}
 
 	/**
-	 * @param first
-	 * @param second
+	 * @param a
+	 * @param b
 	 * @return
 	 */
 	public static Matrix multiply(Matrix a, Matrix b) {

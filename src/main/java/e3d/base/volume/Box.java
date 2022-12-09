@@ -1,15 +1,11 @@
-package e3d.bs.volume;
+package e3d.base.volume;
 
-import e3d.bs.Matrix;
-import e3d.bs.Point3D;
-import e3d.bs.Surface;
-import e3d.bs.Vertex;
-import e3d.bs.Volume;
+import e3d.base.Matrix;
+import e3d.base.Point3D;
+import e3d.base.Surface;
+import e3d.base.Vertex;
+import e3d.base.Volume;
 
-/**
- * @author Arnaud Wieland
- * 
- */
 public class Box extends Volume {
 	static final double[][] VERTICES = { { 0, 0, 0 }, { 1, 0, 0 }, { 1, 1, 0 },
 			{ 0, 1, 0 }, { 0, 0, 1 }, { 1, 0, 1 }, { 1, 1, 1 }, { 0, 1, 1 } };
@@ -18,7 +14,7 @@ public class Box extends Volume {
 			{ 2, 3, 6 }, { 6, 7, 3 }, { 3, 0, 7 }, { 7, 4, 0 } };
 
 	/**
-	 * @param tranform
+	 * @param transform
 	 * @return
 	 */
 	public Box(Matrix transform) {

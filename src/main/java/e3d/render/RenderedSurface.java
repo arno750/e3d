@@ -1,18 +1,16 @@
-package e3d.bs;
+package e3d.render;
 
 import java.awt.Point;
 
-/**
- * @author Arnaud Wieland
- * 
- */
+import e3d.base.Vector3D;
+
 public class RenderedSurface implements Comparable<RenderedSurface> {
 
-	public double z;
-	public Point a;
-	public Point b;
-	public Point c;
-	public Vector3D n;
+	public final double z;
+	public final Point a;
+	public final Point b;
+	public final Point c;
+	public final Vector3D n;
 
 	/**
 	 * @param z

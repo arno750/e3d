@@ -12,26 +12,25 @@ import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 
 import e3d.Resources;
+import e3d.render.Context;
 
-/**
- * @author Arnaud Wieland
- * 
- */
 public class ApplicationFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	Context context;
 	String title;
 	JPanel mainPanel;
 	RenderingPanel renderingPanel;
-	MapPanel mapPanel;
 	CommandPanel commandPanel;
 	int panelWidth, panelHeight;
 
 	/**
+	 * @param context
 	 * @param title
 	 * @param resources
 	 */
-	public void initialize(String title, Resources resources) {
+	public void initialize(Context context, String title, Resources resources) {
+		this.context = context;
 		this.title = title;
 		if (resources.containsKey("mainFrame.text"))
 			this.title = resources.getString("mainFrame.text");
@@ -61,7 +60,7 @@ public class ApplicationFrame extends JFrame {
 		panelWidth = width - 20;
 		panelHeight = height - 150;
 		renderingPanel = new RenderingPanel();
-		renderingPanel.initialize(panelWidth, panelHeight);
+		renderingPanel.initialize(context, panelWidth, panelHeight);
 		renderingPanel.setBorder(new LineBorder(Color.black, 1));
 		mainPanel.add(renderingPanel, constraints.getNextRow());
 

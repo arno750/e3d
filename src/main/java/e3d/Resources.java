@@ -11,17 +11,13 @@ import java.util.ResourceBundle;
 import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
 
-/**
- * @author Arnaud Wieland
- * 
- */
 public class Resources {
 
 	String name;
 	ResourceBundle resourceBundle;
 
 	/**
-	 * @param id
+	 * @param name
 	 */
 	public Resources(String name) {
 		try {
@@ -69,7 +65,7 @@ public class Resources {
 	 */
 	public boolean getBoolean(String key) {
 		try {
-			return resourceBundle.getString(key).equals("true") == true;
+			return resourceBundle.getString(key).equals("true");
 		} catch (Exception exception) {
 			exception.printStackTrace();
 		}
@@ -191,7 +187,7 @@ public class Resources {
 	public Color getColor(String key) {
 		try {
 			String colorName = resourceBundle.getString(key);
-			if (colorName.startsWith("#") == false)
+			if (!colorName.startsWith("#"))
 				return null;
 			int colorValue = Integer.parseInt(colorName.substring(1), 16);
 

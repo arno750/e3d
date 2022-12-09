@@ -9,30 +9,30 @@ import java.awt.Stroke;
 
 import javax.swing.JPanel;
 
-import e3d.bs.RenderedLine;
-import e3d.bs.RenderedSurface;
+import e3d.render.Context;
+import e3d.render.RenderedLine;
+import e3d.render.RenderedSurface;
+import e3d.render.SurfaceType;
 
-/**
- * @author Arnaud Wieland
- * 
- */
 public class RenderingPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	static final Stroke DEFAULT_STROKE = new BasicStroke(1.0f);
 	static final Stroke THICK_STROKE = new BasicStroke(2.0f);
-	static double RESOLUTION = 1000;
 	static Color[] GRAYS = new Color[256];
 	static {
 		for (int i = 0; i < 256; i++)
 			GRAYS[i] = new Color(i, i, i);
 	}
 
+	Context context;
+
 	/**
 	 * @param width
 	 * @param height
 	 */
-	public void initialize(int width, int height) {
+	public void initialize(Context context, int width, int height) {
+		this.context = context;
 		Dimension dimension = new Dimension(width, height);
 		setMinimumSize(dimension);
 		setPreferredSize(dimension);
@@ -54,20 +54,27 @@ public class RenderingPanel extends JPanel {
 			if (intensity < 0)
 				intensity = 0;
 			graphics.setColor(GRAYS[intensity]);
-			Polygon polygon = new Polygon();
-			polygon.addPoint(s.a.x, s.a.y);
-			polygon.addPoint(s.b.x, s.b.y);
-			polygon.addPoint(s.c.x, s.c.y);
-//			graphics.fillPolygon(polygon);
 
-			graphics.drawLine(s.a.x, s.a.y, s.b.x, s.b.y);
-			graphics.drawLine(s.b.x, s.b.y, s.c.x, s.c.y);
-			graphics.drawLine(s.c.x, s.c.y, s.a.x, s.a.y);
+			if (context.surfaceType == SurfaceType.OPAQUE) {
+				Polygon polygon = new Polygon();
+				polygon.addPoint(s.a.x, s.a.y);
+				polygon.addPoint(s.b.x, s.b.y);
+				polygon.addPoint(s.c.x, s.c.y);
+				graphics.fillPolygon(polygon);
+			}
+
+			if (context.surfaceType == SurfaceType.MESH) {
+				graphics.drawLine(s.a.x, s.a.y, s.b.x, s.b.y);
+				graphics.drawLine(s.b.x, s.b.y, s.c.x, s.c.y);
+				graphics.drawLine(s.c.x, s.c.y, s.a.x, s.a.y);
+			}
 		}
 
-		for (RenderedLine l : Controller.renderer.getLines()) {
-			graphics.setColor(l.c);
-			graphics.drawLine(l.a.x, l.a.y, l.b.x, l.b.y);
+		if (context.helpFrame) {
+			for (RenderedLine l : Controller.renderer.getLines()) {
+				graphics.setColor(l.c);
+				graphics.drawLine(l.a.x, l.a.y, l.b.x, l.b.y);
+			}
 		}
 	}
 }

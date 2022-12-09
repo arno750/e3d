@@ -6,18 +6,14 @@ import java.awt.Toolkit;
 import javax.swing.UIManager;
 
 import e3d.Resources;
-import e3d.bs.Context;
-import e3d.bs.Factory;
-import e3d.bs.Matrix;
-import e3d.bs.Point3D;
-import e3d.bs.Renderer;
-import e3d.bs.Scene;
-import e3d.bs.Vector3D;
+import e3d.base.Factory;
+import e3d.base.Matrix;
+import e3d.base.Point3D;
+import e3d.base.Scene;
+import e3d.base.Vector3D;
+import e3d.render.Context;
+import e3d.render.Renderer;
 
-/**
- * @author Arnaud Wieland
- * 
- */
 public class Controller {
 
 	public static final boolean DEBUG = true;
@@ -34,10 +30,6 @@ public class Controller {
 		scene = Factory.read("");
 
 		context = new Context();
-		context.focal = 0.75;
-		context.observer = new Point3D(-5, 5, -7);
-		context.resolution = 1000;
-
 		centerContext();
 		updateContext();
 
@@ -51,7 +43,7 @@ public class Controller {
 		Constants.initialize(resources);
 
 		applicationFrame = new ApplicationFrame();
-		applicationFrame.initialize(title, resources);
+		applicationFrame.initialize(context, title, resources);
 		context.halfWidth = applicationFrame.getPanelWidth() >> 1;
 		context.halfHeight = applicationFrame.getPanelHeight() >> 1;
 
@@ -62,7 +54,7 @@ public class Controller {
 	}
 
 	/**
-	 * @param identifier
+	 * @param name Name of the look and feel
 	 */
 	private static void setLookAndFeel(String name) {
 		try {
@@ -114,13 +106,13 @@ public class Controller {
 		context.transform = Matrix.getTransform(-context.observer.x, -context.observer.y, -context.observer.z, 1.0, 1.0,
 				1.0, context.alpha, context.beta, context.gamma);
 
-		System.out.format("tranform:\n%s", context.transform);
+		System.out.format("transform:\n%s", context.transform);
 	}
 
 	/**
 	 * 
 	 */
-	public static void updateView() {
+	public static void updateView() {		
 		applicationFrame.renderingPanel.repaint();
 	}
 }
