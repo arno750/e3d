@@ -2,13 +2,11 @@ package e3d.base;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
 public class Vector3D {
 
-    public static final Vector3D I_AXIS = new Vector3D(1, 0, 0);
-    public static final Vector3D J_AXIS = new Vector3D(0, 1, 0);
-    public static final Vector3D K_AXIS = new Vector3D(0, 0, 1);
+    public static final Vector3D I_UNIT = new Vector3D(1, 0, 0);
+    public static final Vector3D J_UNIT = new Vector3D(0, 1, 0);
+    public static final Vector3D K_UNIT = new Vector3D(0, 0, 1);
 
     public double i, j, k;
 

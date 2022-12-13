@@ -5,9 +5,11 @@ import e3d.base.volume.*;
 public class Factory {
 
 	/**
-	 * @return
+	 * Builds the scene.
+	 *
+	 * @return the scene.
 	 */
-	public static Scene read(String fileName) {
+	public static Scene build() {
 		Scene scene = new Scene();
 
 //		 scene.volumes.add(new Box(Matrix.getTransform(-0.5, -0.5, -0.5, 1, 1, 1, 0, 0, 0)));

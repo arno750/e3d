@@ -27,7 +27,7 @@ public class Controller {
 	 * @param title
 	 */
 	public static void startGui(String title) {
-		scene = Factory.read("");
+		scene = Factory.build();
 
 		context = new Context();
 		centerContext();
@@ -82,7 +82,7 @@ public class Controller {
 		Vector3D headingOrigin = new Vector3D(context.observer, Point3D.ORIGIN);
 		headingOrigin.j = 0;
 		headingOrigin.normalize();
-		context.gamma = -Math.signum(headingOrigin.i) * getAngle(headingOrigin.getDotProduct(Vector3D.K_AXIS));
+		context.gamma = -Math.signum(headingOrigin.i) * getAngle(headingOrigin.getDotProduct(Vector3D.K_UNIT));
 
 		if (DEBUG) {
 			System.out.format("heading: %s\n", headingOrigin);

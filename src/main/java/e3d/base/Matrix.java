@@ -7,29 +7,26 @@ public class Matrix {
     public double m02, m12, m22, m32;
     public double m03, m13, m23, m33;
 
-    /**
-     *
-     */
     public Matrix() {
     }
 
     /**
-     * @param m00
-     * @param m10
-     * @param m20
-     * @param m30
-     * @param m01
-     * @param m11
-     * @param m21
-     * @param m31
-     * @param m02
-     * @param m12
-     * @param m22
-     * @param m32
-     * @param m03
-     * @param m13
-     * @param m23
-     * @param m33
+     * @param m00 parameter column #0 row #0
+     * @param m10 parameter column #1 row #0
+     * @param m20 parameter column #2 row #0
+     * @param m30 parameter column #3 row #0
+     * @param m01 parameter column #0 row #1
+     * @param m11 parameter column #1 row #1
+     * @param m21 parameter column #2 row #1
+     * @param m31 parameter column #3 row #1
+     * @param m02 parameter column #0 row #2
+     * @param m12 parameter column #1 row #2
+     * @param m22 parameter column #2 row #2
+     * @param m32 parameter column #3 row #2
+     * @param m03 parameter column #0 row #3
+     * @param m13 parameter column #1 row #3
+     * @param m23 parameter column #2 row #3
+     * @param m33 parameter column #3 row #3
      */
     public Matrix(double m00, double m10, double m20, double m30, double m01, double m11, double m21, double m31,
                   double m02, double m12, double m22, double m32, double m03, double m13, double m23, double m33) {
@@ -98,6 +95,8 @@ public class Matrix {
     }
 
     /**
+     * Returns a rotation matrix.
+     *
      * @param alpha an angle, in radians.
      * @return
      */
@@ -131,8 +130,8 @@ public class Matrix {
     public static Matrix getBankRotation(double gamma) {
         Matrix m = getIdentity();
         m.m00 = Math.cos(gamma);
-        m.m10 = Math.sin(gamma);
-        m.m01 = -Math.sin(gamma);
+        m.m10 = -Math.sin(gamma);
+        m.m01 = Math.sin(gamma);
         m.m11 = Math.cos(gamma);
         return m;
     }
