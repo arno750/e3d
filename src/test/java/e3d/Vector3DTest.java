@@ -63,9 +63,9 @@ class Vector3DTest {
 	@Test
 	void whenMultiply() {
 		Vector3D v = new Vector3D(1, 1000, 77777);
-		Matrix m = new Matrix(5, 7, 2, 3, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0);
+		Matrix m = new Matrix(5, 0, 0, 0, 7, 1, 0, 0, 2, 0, 1, 0, 3, 0, 0, 0);
 		v.multiply(m);
-		assertEquals(5 + 7 * 1000 + 2 * 77777 + 3, v.i);
+		assertEquals(5 + 1000 * 7 + 77777 * 2 + 3, v.i);
 		assertEquals(1000, v.j);
 		assertEquals(77777, v.k);
 	}

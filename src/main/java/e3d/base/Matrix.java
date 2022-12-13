@@ -11,6 +11,45 @@ public class Matrix {
     }
 
     /**
+     * Constructs a new 4x4 matrix.
+     *
+     * @param m00 component row #0 column #0
+     * @param m01 component row #0 column #1
+     * @param m02 component row #0 column #2
+     * @param m03 component row #0 column #3
+     * @param m10 component row #1 column #0
+     * @param m11 component row #1 column #1
+     * @param m12 component row #1 column #2
+     * @param m13 component row #1 column #3
+     * @param m20 component row #2 column #0
+     * @param m21 component row #2 column #1
+     * @param m22 component row #2 column #2
+     * @param m23 component row #2 column #3
+     * @param m30 component row #3 column #0
+     * @param m31 component row #3 column #1
+     * @param m32 component row #3 column #2
+     * @param m33 component row #3 column #3
+     */
+    public Matrix(double m00, double m01, double m02, double m03, double m10, double m11, double m12, double m13, double m20, double m21, double m22, double m23, double m30, double m31, double m32, double m33) {
+        this.m00 = m00;
+        this.m01 = m01;
+        this.m02 = m02;
+        this.m03 = m03;
+        this.m10 = m10;
+        this.m11 = m11;
+        this.m12 = m12;
+        this.m13 = m13;
+        this.m20 = m20;
+        this.m21 = m21;
+        this.m22 = m22;
+        this.m23 = m23;
+        this.m30 = m30;
+        this.m31 = m31;
+        this.m32 = m32;
+        this.m33 = m33;
+    }
+
+    /**
      * Returns the identity matrix with ones on the main diagonal and zeros
      * elsewhere.
      *
@@ -108,6 +147,7 @@ public class Matrix {
 
     /**
      * Converts an angle in degrees to an angle in radians.
+     *
      * @param deg an angle, in degrees.
      * @return the angle, in radians.
      */
@@ -158,7 +198,6 @@ public class Matrix {
         Matrix ms = Matrix.getScaling(sx, sy, sz);
 
         return Matrix.multiply(mt, Matrix.multiply(mry, Matrix.multiply(mrz, Matrix.multiply(mrx, ms))));
-//        return Matrix.multiply(mrx, Matrix.multiply(mrz, Matrix.multiply(mry, Matrix.multiply(mt, ms))));
     }
 
     /**
