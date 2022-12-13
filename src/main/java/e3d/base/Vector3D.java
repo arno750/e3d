@@ -110,15 +110,20 @@ public class Vector3D {
     }
 
     /**
-     * Multiplies the matrix and this vector. The fourth row of the matric is not used.
+     * Multiplies this vector V with matrix M:
+     * <p>
+     * <tt>V = V x M</tt>
+     * </p>
+     * <p>
+     * The 1x3 vector [ i j k ] and the 3x3 upper left matrix are used to calculate the new vector.
      *
      * @param m a matrix.
      * @return itself.
      */
     public Vector3D multiply(Matrix m) {
-        double ti = m.m00 * i + m.m10 * j + m.m20 * k + m.m30;
-        double tj = m.m01 * i + m.m11 * j + m.m21 * k + m.m31;
-        double tk = m.m02 * i + m.m12 * j + m.m22 * k + m.m32;
+        double ti = i * m.m00 + j * m.m10 + k * m.m20 + m.m30;
+        double tj = i * m.m01 + j * m.m11 + k * m.m21 + m.m31;
+        double tk = i * m.m02 + j * m.m12 + k * m.m22 + m.m32;
         this.i = ti;
         this.j = tj;
         this.k = tk;

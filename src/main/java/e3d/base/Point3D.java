@@ -72,15 +72,20 @@ public class Point3D {
     }
 
     /**
-     * Multiplies the matrix and this point. The fourth row of the matrix is not used.
+     * Multiplies this point P with matrix M:
+     * <p>
+     * <tt>P = P x M</tt>
+     * </p>
+     * <p>
+     * The point is a homogeneous coordinate [ x y z w ] with w always taken to be 1. This 1x4 vector and the whole 4x4 matrix are used to calculate the new point.
      *
      * @param m a matrix.
      * @return itself.
      */
     public Point3D multiply(Matrix m) {
-        double tx = m.m00 * x + m.m10 * y + m.m20 * z + m.m30;
-        double ty = m.m01 * x + m.m11 * y + m.m21 * z + m.m31;
-        double tz = m.m02 * x + m.m12 * y + m.m22 * z + m.m32;
+        double tx = x * m.m00 + y * m.m10 + z * m.m20 + m.m30;
+        double ty = x * m.m01 + y * m.m11 + z * m.m21 + m.m31;
+        double tz = x * m.m02 + y * m.m12 + z * m.m22 + m.m32;
         this.x = tx;
         this.y = ty;
         this.z = tz;
