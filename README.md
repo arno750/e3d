@@ -42,7 +42,7 @@ In december 2022 the project has been reviewed, fixed and documented.
 
 ## Affine transformations
 
-The points are defined using homogeneous coordinates $[x & y & z & w]$ with $w$ always taken to be 1.
+The points are defined using homogeneous coordinates $[x y z w]$ with $w$ always taken to be 1.
 
 $$
 \begin{bmatrix}
@@ -51,6 +51,6 @@ $$
 \end{bmatrix}
 $$
 
-The three most commonly used transformations (translation, scaling and rotation) are treated in the same way with 4x4 matrices.
+The three most commonly used transformations (translation, scaling and rotation) are treated in the same way with 4x4 matrices. $(ax^2 + bx + c = 0)$
 
 $$ x = {-b \pm \sqrt{b^2-4ac} \over 2a} $$
