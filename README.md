@@ -44,12 +44,12 @@ In december 2022 the project has been reviewed, fixed and documented.
 
 The points are defined using homogeneous coordinates $[x y z w]$ with $w$ always taken to be 1.
 
-$$
+```math
 \begin{bmatrix}
    a & b \\
    c & d
 \end{bmatrix}
-$$
+```
 
 The three most commonly used transformations (translation, scaling and rotation) are treated in the same way with 4x4 matrices. $(ax^2 + bx + c = 0)$
 
