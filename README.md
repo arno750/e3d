@@ -52,3 +52,5 @@ $$
 $$
 
 The three most commonly used transformations (translation, scaling and rotation) are treated in the same way with 4x4 matrices.
+
+$$ x = {-b \pm \sqrt{b^2-4ac} \over 2a} $$
