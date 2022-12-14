@@ -44,9 +44,9 @@ In december 2022 the project has been reviewed, fixed and documented.
 
 The points are defined using homogeneous coordinates $[x y z w]$ with $w$ always taken to be 1.
 
-The three most commonly used transformations (translation, scaling and rotation) are treated in the same way with 4x4 matrices. $(ax^2 + bx + c = 0)$
+The three most commonly used transformations (translation, scaling and rotation) are treated in the same way with 4x4 matrices.
 
-Translation defined by $[T_x & T_y & T_z]$:
+Translation defined by $[T_x T_y T_z]$:
 
 ```math
 T =\begin{bmatrix}
@@ -57,7 +57,7 @@ T_x & T_y & T_z & 1
 \end{bmatrix}
 ```
 
-Scaling defined by $\begin{bmatrix}S_x & S_y & S_z\end{bmatrix}$:
+Scaling defined by $[S_x S_y S_z]$:
 
 ```math
 S =\begin{bmatrix}
@@ -88,11 +88,11 @@ R_y =\begin{bmatrix}
 \end{bmatrix}
 ```
 
-```math
+$$
 R_z =\begin{bmatrix}
 \cos \theta & \sin \theta & 0 & 0\\
 -\sin \theta & \cos \theta & 0 & 0\\
 0 & 0 & 1 & 0\\
 0 & 0 & 0 & 1
 \end{bmatrix}
-```
+$$
