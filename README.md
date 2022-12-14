@@ -44,13 +44,55 @@ In december 2022 the project has been reviewed, fixed and documented.
 
 The points are defined using homogeneous coordinates $[x y z w]$ with $w$ always taken to be 1.
 
-```math
-\begin{bmatrix}
-   a & b \\
-   c & d
-\end{bmatrix}
-```
-
 The three most commonly used transformations (translation, scaling and rotation) are treated in the same way with 4x4 matrices. $(ax^2 + bx + c = 0)$
 
-$$ x = {-b \pm \sqrt{b^2-4ac} \over 2a} $$
+Translation defined by $\left[\begin{array}{ccc}T_x & T_y & T_z\end{array}\right]$:
+
+```math
+T =\left[\begin{array}{ccc}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+T_x & T_y & T_z & 1
+\end{array}\right]
+```
+
+Scaling defined by $\left[\begin{array}{ccc}S_x & S_y & S_z\end{array}\right]$:
+
+```math
+S =\left[\begin{array}{ccc}
+S_x & 0 & 0 & 0\\
+0 & S_y & 0 & 0\\
+0 & 0 & S_z & 0\\
+0 & 0 & 0 & 1
+\end{array}\right]
+```
+
+Rotation (counterclockwise) about the _X_, _Y_ and _Z_ axis respectively defined by the $\theta$ angle:
+
+```math
+R_x =\left[\begin{array}{ccc}
+1 & 0 & 0 & 0\\
+0 & \cos \theta & \sin \theta & 0\\
+0 & -\sin \theta & \cos \theta & 0\\
+0 & 0 & 0 & 1
+\end{array}\right]$
+```
+
+```math
+R_y =\left[\begin{array}{ccc}
+\cos \theta & 0 & -\sin \theta & 0\\
+0 & 1 & 0 & 0\\
+\sin \theta & 0 & \cos \theta & 0\\
+0 & 0 & 0 & 1
+\end{array}\right]$
+```
+
+```math
+R_z =\left[\begin{array}{ccc}
+\cos \theta & \sin \theta & 0 & 0\\
+-\sin \theta & \cos \theta & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1
+\end{array}\right]$
+```
