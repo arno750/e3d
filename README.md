@@ -46,53 +46,53 @@ The points are defined using homogeneous coordinates $[x y z w]$ with $w$ always
 
 The three most commonly used transformations (translation, scaling and rotation) are treated in the same way with 4x4 matrices. $(ax^2 + bx + c = 0)$
 
-Translation defined by $\left[\begin{array}{ccc}T_x & T_y & T_z\end{array}\right]$:
+Translation defined by $[T_x & T_y & T_z]$:
 
 ```math
-T =\left[\begin{array}{ccc}
+T =\begin{bmatrix}
 1 & 0 & 0 & 0\\
 0 & 1 & 0 & 0\\
 0 & 0 & 1 & 0\\
 T_x & T_y & T_z & 1
-\end{array}\right]
+\end{bmatrix}
 ```
 
-Scaling defined by $\left[\begin{array}{ccc}S_x & S_y & S_z\end{array}\right]$:
+Scaling defined by $\begin{bmatrix}S_x & S_y & S_z\end{bmatrix}$:
 
 ```math
-S =\left[\begin{array}{ccc}
+S =\begin{bmatrix}
 S_x & 0 & 0 & 0\\
 0 & S_y & 0 & 0\\
 0 & 0 & S_z & 0\\
 0 & 0 & 0 & 1
-\end{array}\right]
+\end{bmatrix}
 ```
 
 Rotation (counterclockwise) about the _X_, _Y_ and _Z_ axis respectively defined by the $\theta$ angle:
 
 ```math
-R_x =\left[\begin{array}{ccc}
+R_x =\begin{bmatrix}
 1 & 0 & 0 & 0\\
 0 & \cos \theta & \sin \theta & 0\\
 0 & -\sin \theta & \cos \theta & 0\\
 0 & 0 & 0 & 1
-\end{array}\right]$
+\end{bmatrix}$
 ```
 
 ```math
-R_y =\left[\begin{array}{ccc}
+R_y =\begin{bmatrix}
 \cos \theta & 0 & -\sin \theta & 0\\
 0 & 1 & 0 & 0\\
 \sin \theta & 0 & \cos \theta & 0\\
 0 & 0 & 0 & 1
-\end{array}\right]$
+\end{bmatrix}$
 ```
 
 ```math
-R_z =\left[\begin{array}{ccc}
+R_z =\begin{bmatrix}
 \cos \theta & \sin \theta & 0 & 0\\
 -\sin \theta & \cos \theta & 0 & 0\\
 0 & 0 & 1 & 0\\
 0 & 0 & 0 & 1
-\end{array}\right]$
+\end{bmatrix}$
 ```
