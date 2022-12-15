@@ -14,10 +14,10 @@ variables:
     --fail-at-end
     --show-version
     -DinstallAtEnd=true
-    -DdeployAtEnd=true  
+    -DdeployAtEnd=true
 
 java-build-and-test:
-  image: maven:3.8-openjdk-11
+  image: maven:3.8-openjdk-17
   stage: build
   cache:
     key: "maven-$CI_COMMIT_REF_SLUG"
