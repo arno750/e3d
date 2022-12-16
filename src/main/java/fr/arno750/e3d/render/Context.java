@@ -20,10 +20,12 @@ public class Context {
 	public double resolution = PIXEL_PER_METER;
 	public int halfWidth, halfHeight;
 
+	public double distance;
+	
 	/**
 	 * Default observer's position is ten meters behind the scene
 	 */
-	public Point3D observer = new Point3D(0, 0, -10);
+	public Point3D observer = new Point3D(2, 2, -7);
 
 	public double alpha;
 	public double beta;
@@ -33,5 +35,5 @@ public class Context {
 
 	public SurfaceType surfaceType = SurfaceType.MESH;
 	public boolean hiddenSurfaceRemoval = true;
-	public boolean helpFrame = true;
+	public boolean axis = true;
 }

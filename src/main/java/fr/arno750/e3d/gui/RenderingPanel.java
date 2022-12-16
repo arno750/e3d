@@ -70,7 +70,7 @@ public class RenderingPanel extends JPanel {
 			}
 		}
 
-		if (context.helpFrame) {
+		if (context.axis) {
 			for (RenderedLine l : Controller.renderer.getLines()) {
 				graphics.setColor(l.c);
 				graphics.drawLine(l.a.x, l.a.y, l.b.x, l.b.y);

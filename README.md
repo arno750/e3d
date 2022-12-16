@@ -68,7 +68,7 @@ S_x & 0 & 0 & 0\\
 \end{bmatrix}
 ```
 
-Rotation (counterclockwise) about the _X_, _Y_ and _Z_ axis respectively defined by the $\theta$ angle:
+Rotation (counterclockwise) about the _X_, _Y_ and _Z_ axes respectively defined by the $\theta$ angle:
 
 ```math
 R_x =\begin{bmatrix}
@@ -96,3 +96,37 @@ R_z =\begin{bmatrix}
 0 & 0 & 0 & 1
 \end{bmatrix}
 ```
+
+## Coordinate systems
+
+The coordinate system is left-handed: the positive x, y and z axes point right, up and forward, respectively.
+
+![Coordinate system](images/left-handed.png)
+
+Positive rotation is clockwise about the axes of rotation and is using Tait–Bryan angles:
+
+|        Angle         | Letter |     Range     |  Axis  |
+| :------------------: | :----: | :-----------: | :----: |
+| Pitch (or elevation) |   β    |  [-90°, 90°]  | x-axis |
+|   Yaw (or heading)   |   α    |  [0°, 360°]   | y-axis |
+|    Roll (or bank)    |   γ    | [-180°, 180°] | z-axis |
+
+Pitch is the angle that the camera (the longitudinal z-axis) forms with the horizon. If the camera is pointed at the horizon, the pitch is 0° ; if it is pointed straight up, the pitch is 90° ; and if it is pointed straight down, the pitch is -90°.
+
+![Pitch](images/left-x.png)
+
+Heading (yaw angle) is the horizontal direction that the camera is pointing, measured clockwise from true north.
+
+![Yaw](images/left-y.png)
+
+Roll angle is the amount of rotation around the longitudinal z-axis in order to bring the lateral x-axis parallel with the horizon, with the top side facing above rather than below the horizon.
+
+![Roll](images/left-z.png)
+
+To relate the camera-fixed coordinate system to the scene-fixed coordinate system the axes start in the same orientation and are first rotated by α about the y-axis. The second rotation is about the x-axis by β. Finally, the third rotation is by γ about the z-axis
+
+See:
+
+- [Axes conventions](https://en.wikipedia.org/wiki/Axes_conventions)
+- [Euler angles](https://en.wikipedia.org/wiki/Euler_angles)
+- [Right-hand rules](https://en.wikipedia.org/wiki/Right-hand_rule)

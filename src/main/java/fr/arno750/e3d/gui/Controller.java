@@ -30,7 +30,7 @@ public class Controller {
 		scene = Factory.build();
 
 		context = new Context();
-		centerContext();
+		lookTowardsOrigin();
 		updateContext();
 
 		renderer = new Renderer(scene);
@@ -78,7 +78,14 @@ public class Controller {
 	/**
 	 * 
 	 */
-	public static void centerContext() {
+	public static void changeDistance() {
+		context.observer = new Point3D(new Vector3D(context.observer).setLength(context.distance));
+	}
+	
+	/**
+	 * 
+	 */
+	public static void lookTowardsOrigin() {
 		Vector3D headingOrigin = new Vector3D(context.observer, Point3D.ORIGIN);
 		headingOrigin.j = 0;
 		headingOrigin.normalize();
@@ -103,6 +110,8 @@ public class Controller {
 	 * 
 	 */
 	public static void updateContext() {
+		context.distance = context.observer.getDistanceFromOrigin();
+
 		context.transform = Matrix.getTransform(-context.observer.x, -context.observer.y, -context.observer.z, 1.0, 1.0,
 				1.0, context.alpha, context.beta, context.gamma);
 

@@ -1,7 +1,6 @@
 package fr.arno750.e3d.base;
 
-import fr.arno750.e3d.base.volume.*;
-import fr.arno750.e3d.base.volume.BezierPatch;
+import fr.arno750.e3d.base.volume.Teapot;
 
 public class Factory {
 

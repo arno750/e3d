@@ -50,6 +50,15 @@ class Vector3DTest {
 		assertEquals(3 / l, v.k);
 		assertEquals(1, v.getLength());
 	}
+	
+	@Test
+	void whenSetlength() {
+		Vector3D v1 = new Vector3D(1, 2, 3);
+		Vector3D v2 = new Vector3D(1, 2, 3);
+		v2.setLength(10.0);
+		assertEquals(10.0, v2.getLength());
+		assertTrue(Vector3D.getCrossProduct(v1, v2).isZero());
+	}	
 
 	@Test
 	void givenZeroVector_whenNormalize() {

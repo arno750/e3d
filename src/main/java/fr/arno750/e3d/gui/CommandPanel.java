@@ -1,31 +1,41 @@
 package fr.arno750.e3d.gui;
 
-import fr.arno750.e3d.render.Context;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
-import java.io.Serial;
 import java.text.DecimalFormat;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import fr.arno750.e3d.render.Context;
+import fr.arno750.e3d.render.SurfaceType;
 
 public class CommandPanel extends JPanel {
 
     public static final DecimalFormat NUMBER_FORMAT = new DecimalFormat("0.0");
-    @Serial
     private static final long serialVersionUID = 1L;
     Context context;
     JSpinField focal;
     JSpinField resolution;
-    JSpinField cx;
-    JSpinField cy;
-    JSpinField cz;
-    JSpinField ca;
-    JSpinField cb;
-    JSpinField cg;
+    JSpinField distance;
+    JSpinField xObserver;
+    JSpinField yObserver;
+    JSpinField zObserver;
+    JSpinField pitch;
+    JSpinField roll;
+    JSpinField yaw;
     JButton reset;
     JButton center;
-    JButton update;
     JCheckBox autoCenter;
+    JCheckBox axis;
+    JCheckBox hiddenSurfaceRemoval;
+    JCheckBox opaque;
 
     public void initialize() {
         context = Controller.context;
@@ -42,34 +52,62 @@ public class CommandPanel extends JPanel {
         add(panel, constraints1);
         constraints2 = new GridBagHelper();
 
+        label = new JLabel("Context");
+        constraints2.gridwidth = 2;
+        panel.add(label, constraints2);
+        constraints2.gridwidth = 1;
+        constraints2.insets = new Insets(0, 4, 0, 4);
+
+        label = new JLabel("Focal");
+        panel.add(label, constraints2.getNextRow());
+        focal = new JSpinField(-100, 100, 0.01, 2);
+        focal.setPreferredSize(new Dimension(70, 18));
+        panel.add(focal, constraints2.getNextColumn());
+
+        label = new JLabel("Resolution (pixel per meter)");
+        panel.add(label, constraints2.getNextRow());
+        resolution = new JSpinField(0, 10000, 100, 0);
+        resolution.setPreferredSize(new Dimension(70, 18));
+        panel.add(resolution, constraints2.getNextColumn());
+
+        label = new JLabel("distance");
+        panel.add(label, constraints2.getNextRow());
+        distance = new JSpinField(-100, 100, 0.1, 2);
+        distance.setPreferredSize(new Dimension(70, 18));
+        panel.add(distance, constraints2.getNextColumn());
+
+
+        panel = new JPanel();
+        panel.setLayout(new GridBagLayout());
+        add(panel, constraints1.getNextColumn());
+        constraints2 = new GridBagHelper();
+
         label = new JLabel("Translation");
         constraints2.gridwidth = 2;
         panel.add(label, constraints2);
         constraints2.gridwidth = 1;
         constraints2.insets = new Insets(0, 4, 0, 4);
 
-        label = new JLabel("x (horizontal)");
+        label = new JLabel("x (red/horizontal)");
         panel.add(label, constraints2.getNextRow());
-        cx = new JSpinField(-100, 100, 0.1, 1);
-        cx.setValue((int) context.observer.x);
-        cx.setPreferredSize(new Dimension(70, 18));
-        panel.add(cx, constraints2.getNextColumn());
+        xObserver = new JSpinField(-100, 100, 0.1, 2);
+        xObserver.setPreferredSize(new Dimension(70, 18));
+        panel.add(xObserver, constraints2.getNextColumn());
 
-        label = new JLabel("y (vertical)");
+        label = new JLabel("y (green/vertical)");
         panel.add(label, constraints2.getNextRow());
-        cy = new JSpinField(-100, 100, 0.1, 1);
-        cy.setValue((int) context.observer.y);
-        cy.setPreferredSize(new Dimension(70, 18));
-        cy.setHorizontalAlignment(JTextField.TRAILING);
-        panel.add(cy, constraints2.getNextColumn());
+        yObserver = new JSpinField(-100, 100, 0.1, 2);
+        yObserver.setPreferredSize(new Dimension(70, 18));
+        yObserver.setHorizontalAlignment(JTextField.TRAILING);
+        panel.add(yObserver, constraints2.getNextColumn());
 
-        label = new JLabel("z (depth)");
+        label = new JLabel("z (blue/depth)");
         panel.add(label, constraints2.getNextRow());
-        cz = new JSpinField(-100, 100, 0.1, 1);
-        cz.setValue((int) context.observer.z);
-        cz.setPreferredSize(new Dimension(70, 18));
-        cz.setHorizontalAlignment(JTextField.TRAILING);
-        panel.add(cz, constraints2.getNextColumn());
+        zObserver = new JSpinField(-100, 100, 0.1, 2);
+        zObserver.setPreferredSize(new Dimension(70, 18));
+        zObserver.setHorizontalAlignment(JTextField.TRAILING);
+        panel.add(zObserver, constraints2.getNextColumn());
+
 
         panel = new JPanel();
         panel.setLayout(new GridBagLayout());
@@ -82,30 +120,31 @@ public class CommandPanel extends JPanel {
         constraints2.gridwidth = 1;
         constraints2.insets = new Insets(0, 4, 0, 4);
 
-        label = new JLabel("α (elevation)");
+        label = new JLabel("α (yaw/heading)");
         panel.add(label, constraints2.getNextRow());
-        ca = new JSpinField(-180, 180, 1.0, 0);
-        ca.setHorizontalAlignment(JTextField.TRAILING);
-        ca.setPreferredSize(new Dimension(70, 18));
-        panel.add(ca, constraints2.getNextColumn());
+        yaw = new JSpinField(0, 360, 1.0, 2);
+        yaw.setPreferredSize(new Dimension(70, 18));
+        yaw.setHorizontalAlignment(JTextField.TRAILING);
+        panel.add(yaw, constraints2.getNextColumn());
 
-        label = new JLabel("β (bank)");
+        label = new JLabel("β (pitch/elevation)");
         panel.add(label, constraints2.getNextRow());
-        cb = new JSpinField(-180, 180, 1.0, 0);
-        cb.setPreferredSize(new Dimension(70, 18));
-        cb.setHorizontalAlignment(JTextField.TRAILING);
-        panel.add(cb, constraints2.getNextColumn());
+        pitch = new JSpinField(-180, 180, 1.0, 2);
+        pitch.setHorizontalAlignment(JTextField.TRAILING);
+        pitch.setPreferredSize(new Dimension(70, 18));
+        panel.add(pitch, constraints2.getNextColumn());
 
-        label = new JLabel("γ (heading)");
+        label = new JLabel("γ (roll/bank)");
         panel.add(label, constraints2.getNextRow());
-        cg = new JSpinField(-180, 180, 1.0, 0);
-        cg.setPreferredSize(new Dimension(70, 18));
-        cg.setHorizontalAlignment(JTextField.TRAILING);
-        panel.add(cg, constraints2.getNextColumn());
+        roll = new JSpinField(-90, 90, 1.0, 2);
+        roll.setPreferredSize(new Dimension(70, 18));
+        roll.setHorizontalAlignment(JTextField.TRAILING);
+        panel.add(roll, constraints2.getNextColumn());
+
 
         panel = new JPanel();
         panel.setLayout(new GridBagLayout());
-        constraints1.gridwidth = 2;
+        constraints1.gridwidth = 3;
         add(panel, constraints1.getNextRow());
         constraints2 = new GridBagHelper();
         constraints2.insets = new Insets(4, 4, 8, 4);
@@ -114,64 +153,135 @@ public class CommandPanel extends JPanel {
         constraints1.insets = new Insets(0, 0, 8, 0);
         panel.add(reset, constraints2);
         reset.addActionListener(event -> {
-            cx.setValue(0);
-            cy.setValue(1);
-            cz.setValue(-7);
-            updateContext(true);
+            xObserver.setValue(2);
+            yObserver.setValue(2);
+            zObserver.setValue(-7);
+            updateContext();
         });
 
-        update = new JButton("center");
-        panel.add(update, constraints2.getNextColumn());
-        update.addActionListener(event -> updateContext(true));
+        center = new JButton("center");
+        panel.add(center, constraints2.getNextColumn());
+        center.addActionListener(event -> {
+            updateContext();
+            Controller.lookTowardsOrigin();
+            pitch.adjustValue(context.alpha * 180.0 / Math.PI);
+            roll.adjustValue(context.beta * 180.0 / Math.PI);
+            yaw.adjustValue(context.gamma * 180.0 / Math.PI);
 
-        update = new JButton("update");
-        panel.add(update, constraints2.getNextColumn());
-        update.addActionListener(event -> updateContext(false));
+            Controller.updateContext();
+            distance.adjustValue(context.distance);
 
-        autoCenter = new JCheckBox("Auto-centered");
+            Controller.updateView();
+        });
+
+        autoCenter = new JCheckBox("Auto-centered", true);
         panel.add(autoCenter, constraints2.getNextColumn());
 
-        updateAngles();
+        axis = new JCheckBox("Axis");
+        panel.add(axis, constraints2.getNextColumn());
 
-        PropertyChangeListener propertyChangeListener = event -> {
+        hiddenSurfaceRemoval = new JCheckBox("Hidden surface removal");
+        panel.add(hiddenSurfaceRemoval, constraints2.getNextColumn());
+
+        opaque = new JCheckBox("Opaque surfaces");
+        panel.add(opaque, constraints2.getNextColumn());
+
+        setFromContext(context);
+
+        ActionListener actionListener = event -> {
+            updateContext();
+            Controller.updateContext();
+            Controller.updateView();
+        };
+        axis.addActionListener(actionListener);
+        hiddenSurfaceRemoval.addActionListener(actionListener);
+        opaque.addActionListener(actionListener);
+
+        PropertyChangeListener propertyChangeListener1 = event -> {
             if (event.getPropertyName().equals("value")) {
-                updateContext(autoCenter.isSelected());
+                updateContext();
+                if (autoCenter.isSelected()) {
+                    Controller.lookTowardsOrigin();
+                    pitch.adjustValue(context.alpha * 180.0 / Math.PI);
+                    roll.adjustValue(context.beta * 180.0 / Math.PI);
+                    yaw.adjustValue(context.gamma * 180.0 / Math.PI);
+
+                }
+                Controller.updateContext();
+                distance.adjustValue(context.distance);
+
+                Controller.updateView();
             }
         };
-        cx.addPropertyChangeListener(propertyChangeListener);
-        cy.addPropertyChangeListener(propertyChangeListener);
-        cz.addPropertyChangeListener(propertyChangeListener);
-        ca.addPropertyChangeListener(propertyChangeListener);
-        cb.addPropertyChangeListener(propertyChangeListener);
-        cg.addPropertyChangeListener(propertyChangeListener);
+        focal.addPropertyChangeListener(propertyChangeListener1);
+        resolution.addPropertyChangeListener(propertyChangeListener1);
+        xObserver.addPropertyChangeListener(propertyChangeListener1);
+        yObserver.addPropertyChangeListener(propertyChangeListener1);
+        zObserver.addPropertyChangeListener(propertyChangeListener1);
+
+        PropertyChangeListener propertyChangeListener2 = event -> {
+            if (event.getPropertyName().equals("value")) {
+                updateContext();
+                Controller.changeDistance();
+                xObserver.adjustValue(context.observer.x);
+                yObserver.adjustValue(context.observer.y);
+                zObserver.adjustValue(context.observer.z);
+
+                Controller.updateContext();
+                Controller.updateView();
+            }
+        };
+        distance.addPropertyChangeListener(propertyChangeListener2);
+
+        PropertyChangeListener propertyChangeListener3 = event -> {
+            if (event.getPropertyName().equals("value")) {
+                if (!autoCenter.isSelected()) {
+                    updateContext();
+                    Controller.updateContext();
+                    Controller.updateView();
+                }
+            }
+        };
+        pitch.addPropertyChangeListener(propertyChangeListener3);
+        roll.addPropertyChangeListener(propertyChangeListener3);
+        yaw.addPropertyChangeListener(propertyChangeListener3);
+    }
+
+    /**
+     * @param context
+     */
+    public void setFromContext(Context context) {
+        focal.setValue(context.focal);
+        resolution.setValue(context.resolution);
+        distance.setValue(context.distance);
+        xObserver.setValue(context.observer.x);
+        yObserver.setValue(context.observer.y);
+        zObserver.setValue(context.observer.z);
+        pitch.setValue(context.alpha * 180.0 / Math.PI);
+        roll.setValue(context.beta * 180.0 / Math.PI);
+        yaw.setValue(context.gamma * 180.0 / Math.PI);
+
+        axis.setSelected(context.axis);
+        hiddenSurfaceRemoval.setSelected(context.hiddenSurfaceRemoval);
+        opaque.setSelected(context.surfaceType == SurfaceType.OPAQUE);
     }
 
     /**
      *
      */
-    public void updateContext(boolean centered) {
-        context.observer.x = cx.getValue();
-        context.observer.y = cy.getValue();
-        context.observer.z = cz.getValue();
-        context.alpha = Math.PI * ca.getValue() / 180.0;
-        context.beta = Math.PI * cb.getValue() / 180.0;
-        context.gamma = Math.PI * cg.getValue() / 180.0;
+    public void updateContext() {
+        context.focal = focal.getValue();
+        context.resolution = resolution.getValue();
+        context.distance = distance.getValue();
+        context.observer.x = xObserver.getValue();
+        context.observer.y = yObserver.getValue();
+        context.observer.z = zObserver.getValue();
+        context.alpha = Math.PI * pitch.getValue() / 180.0;
+        context.beta = Math.PI * roll.getValue() / 180.0;
+        context.gamma = Math.PI * yaw.getValue() / 180.0;
 
-        if (centered) {
-            Controller.centerContext();
-            updateAngles();
-        }
-
-        Controller.updateContext();
-        Controller.updateView();
-    }
-
-    /**
-     *
-     */
-    public void updateAngles() {
-        ca.setValue((int) (context.alpha / Math.PI * 180.0));
-        cb.setValue((int) (context.beta / Math.PI * 180.0));
-        cg.setValue((int) (context.gamma / Math.PI * 180.0));
+        context.axis = axis.isSelected();
+        context.hiddenSurfaceRemoval = hiddenSurfaceRemoval.isSelected();
+        context.surfaceType = opaque.isSelected() ? SurfaceType.OPAQUE : SurfaceType.MESH;
     }
 }
