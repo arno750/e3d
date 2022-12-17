@@ -5,12 +5,12 @@ import java.util.List;
 
 public class Scene {
 
-	List<Volume> volumes = new ArrayList<>();
+    List<Volume> volumes = new ArrayList<>();
 
-	/**
-	 * @return the volumes.
-	 */
-	public List<Volume> getVolumes() {
-		return volumes;
-	}
+    /**
+     * @return the volumes.
+     */
+    public List<Volume> getVolumes() {
+        return volumes;
+    }
 }

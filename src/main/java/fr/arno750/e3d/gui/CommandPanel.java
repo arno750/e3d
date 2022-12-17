@@ -1,20 +1,13 @@
 package fr.arno750.e3d.gui;
 
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import fr.arno750.e3d.render.Context;
+import fr.arno750.e3d.render.SurfaceType;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
-
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import fr.arno750.e3d.render.Context;
-import fr.arno750.e3d.render.SurfaceType;
 
 public class CommandPanel extends JPanel {
 
