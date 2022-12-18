@@ -8,10 +8,10 @@ import java.awt.*;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-
 public class Resources {
 
-    final Logger logger = LoggerFactory.getLogger(Resources.class);
+    /** Logger. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(Resources.class);
 
     String name;
     ResourceBundle resourceBundle;
@@ -24,7 +24,7 @@ public class Resources {
             resourceBundle = ResourceBundle.getBundle(name);
             this.name = name;
         } catch (MissingResourceException exception) {
-            logger.error("Missing resources", exception);
+            LOGGER.error("Missing resources", exception);
             throw (new Error("Resources " + name + " missing..."));
         }
     }
