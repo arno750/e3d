@@ -4,7 +4,7 @@ volumes:
     type: Box
     transform:
       tx: -.5
-      ty: -1
+      ty: -1.01
       tz: -.5
 
   - name: "Box #2"
