@@ -8,6 +8,6 @@ public class Application {
      * @param args
      */
     public static void main(String[] args) {
-        Controller.startGui("3D");
+        Controller.startGui("3D", "/fr/arno750/e3d/scene.yaml");
     }
 }

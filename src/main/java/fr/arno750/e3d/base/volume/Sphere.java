@@ -1,18 +1,19 @@
 package fr.arno750.e3d.base.volume;
 
 import fr.arno750.e3d.base.*;
+import fr.arno750.e3d.base.config.VolumeDefinition;
 
 public class Sphere extends Volume {
 
     /**
-     * @param latitudes
-     * @param longitudes
-     * @param transform
+     * @param definition
      * @return
      */
-    public Sphere(int latitudes, int longitudes, Matrix transform) {
-        name = "Sphere";
+    public Sphere(VolumeDefinition definition) {
+        super(definition);
 
+        int latitudes = definition.getParameters().getLatitudes();
+        int longitudes = definition.getParameters().getLongitudes();
         int halfLatitudes = latitudes / 2;
         int halfLongitudes = longitudes / 2;
 
@@ -71,7 +72,7 @@ public class Sphere extends Volume {
         }
 
         prepareSurfaces(Point3D.ORIGIN);
-        transform(transform);
+        transform(definition.getTransformMatrix());
         prepareSurfaces();
         workOutVertexNormals();
     }

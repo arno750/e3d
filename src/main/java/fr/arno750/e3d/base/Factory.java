@@ -1,6 +1,9 @@
 package fr.arno750.e3d.base;
 
-import fr.arno750.e3d.base.volume.Teapot;
+import fr.arno750.e3d.base.config.VolumeDefinition;
+import fr.arno750.e3d.base.config.Volumes;
+import fr.arno750.e3d.base.volume.*;
+import org.yaml.snakeyaml.Yaml;
 
 public class Factory {
 
@@ -9,17 +12,26 @@ public class Factory {
      *
      * @return the scene.
      */
-    public static Scene build() {
+    public static Scene build(String sceneConfigurationName) {
+        Yaml yaml = new Yaml();
+        Volumes volumes = yaml.loadAs(Scene.class.getResourceAsStream(sceneConfigurationName), Volumes.class);
+
         Scene scene = new Scene();
 
-//		 scene.volumes.add(new Box(Matrix.getTransform(-0.5, -0.5, -0.5, 1, 1, 1, 0, 0, 0)));
-//		scene.volumes.add(new Box(Matrix.getTransform(1, 0, 0, 2, 2, 1, 0, 0, 0)));
-//		scene.volumes.add(new Box(Matrix.getTransform(3, 0, 0, 3, 3, 1, 0, 0, 0)));
-//		scene.volumes.add(new Box(Matrix.getTransform(4, 1, -1, 1, 1, 1, 0, 0, 0)));
-//		scene.volumes.add(new Sphere(24, 32, Matrix.getTransform(0, 0, 0, 0.1, 0.1, 0.1, 0, 0, 0)));
-//		scene.volumes.add(new Torus(0.5, 16, 16, Matrix.getTransform(3, 0, 0, 0.1, 0.1, 0.1, 0, 0, 0)));
-        scene.volumes.add(new Teapot(16, Matrix.getTransform(0, 0, 0, 0.15, 0.15, 0.15, 0, 0, 0)));
-//		scene.volumes.add(new BezierPatch(8, Matrix.getTransform(0, 0, 0, 1, 1, 1, 0, 0, 0)));
+        for (VolumeDefinition definition : volumes.getVolumes()) {
+            if (definition.getStatus().equals("rendered")) {
+                Volume newVolume = switch (definition.getType()) {
+                    case "Box" -> new Box(definition);
+                    case "Sphere" -> new Sphere(definition);
+                    case "Torus" -> new Torus(definition);
+                    case "BezierPatch" -> new BezierPatch(definition);
+                    case "Teapot" -> new Teapot(definition);
+                    default -> null;
+                };
+
+                scene.add(newVolume);
+            }
+        }
 
         return scene;
     }

@@ -1,18 +1,23 @@
 package fr.arno750.e3d.base.volume;
 
-import fr.arno750.e3d.base.*;
+import fr.arno750.e3d.base.Point3D;
+import fr.arno750.e3d.base.Surface;
+import fr.arno750.e3d.base.Vertex;
+import fr.arno750.e3d.base.Volume;
+import fr.arno750.e3d.base.config.VolumeDefinition;
 
 public class Torus extends Volume {
 
     /**
-     * @param ratio
-     * @param latitudes
-     * @param longitudes
-     * @param transform
+     * @param definition
      * @return
      */
-    public Torus(double ratio, int latitudes, int longitudes, Matrix transform) {
-        name = "Torus";
+    public Torus(VolumeDefinition definition) {
+        super(definition);
+
+        double ratio = definition.getParameters().getRatio();
+        int latitudes = definition.getParameters().getLatitudes();
+        int longitudes = definition.getParameters().getLongitudes();
 
         // Adds vertices
         for (int i = 0; i < latitudes; i++) {
@@ -64,7 +69,7 @@ public class Torus extends Volume {
             }
         }
 
-        transform(transform);
+        transform(definition.getTransformMatrix());
         prepareSurfaces();
         workOutVertexNormals();
     }

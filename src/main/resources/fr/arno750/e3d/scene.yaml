@@ -1,0 +1,72 @@
+volumes:
+  - name: "Box #1"
+    status: ignored
+    type: Box
+    transform:
+      tx: -.5
+      ty: -.5
+      tz: -.5
+
+  - name: "Box #2"
+    status: ignored
+    type: Box
+    transform:
+      tx: 1
+      sx: 2
+      sy: 2
+
+  - name: "Box #3"
+    status: ignored
+    type: Box
+    transform:
+      tx: 3
+      sx: 3
+      sy: 3
+
+  - name: "Box #4"
+    status: ignored
+    type: Box
+    transform:
+      tx: 4
+      ty: 1
+      tz: -1
+
+  - name: "Sphere"
+    status: ignored
+    type: Sphere
+    parameters:
+      latitudes: 24
+      longitudes: 32
+    transform:
+      sx: 0.1
+      sy: 0.1
+      sz: 0.1
+
+  - name: "Torus"
+    status: ignored
+    type: Torus
+    parameters:
+      ratio: 0.5
+      latitudes: 16
+      longitudes: 16
+    transform:
+      tx: 3
+      sx: 0.1
+      sy: 0.1
+      sz: 0.1
+
+  - name: "Utah teapot"
+    status: rendered
+    type: Teapot
+    parameters:
+      steps: 16
+    transform:
+      sx: 0.15
+      sy: 0.15
+      sz: 0.15
+
+  - name: "Bezier patch"
+    status: ignored
+    type: BezierPatch
+    parameters:
+      steps: 8

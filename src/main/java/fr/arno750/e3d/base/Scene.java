@@ -13,4 +13,8 @@ public class Scene {
     public List<Volume> getVolumes() {
         return volumes;
     }
+
+    public void add(Volume volume) {
+        volumes.add(volume);
+    }
 }

@@ -20,8 +20,8 @@ public class Controller {
     /**
      * @param title
      */
-    public static void startGui(String title) {
-        scene = Factory.build();
+    public static void startGui(String title, String sceneConfigurationName) {
+        scene = Factory.build(sceneConfigurationName);
 
         context = new Context();
         lookTowardsOrigin();

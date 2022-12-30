@@ -1,6 +1,8 @@
 package fr.arno750.e3d.base.volume;
 
 import fr.arno750.e3d.base.*;
+import fr.arno750.e3d.base.config.Parameters;
+import fr.arno750.e3d.base.config.VolumeDefinition;
 
 public class Box extends Volume {
     static final double[][] VERTICES = {{0, 0, 0}, {1, 0, 0}, {1, 1, 0},
@@ -10,11 +12,11 @@ public class Box extends Volume {
             {2, 3, 6}, {6, 7, 3}, {3, 0, 7}, {7, 4, 0}};
 
     /**
-     * @param transform
+     * @param definition
      * @return
      */
-    public Box(Matrix transform) {
-        name = "Box";
+    public Box(VolumeDefinition definition) {
+        super(definition);
 
         for (double[] coordinates : VERTICES) {
             vertices.add(new Vertex(coordinates[0], coordinates[1],
@@ -30,7 +32,7 @@ public class Box extends Volume {
         }
 
         prepareSurfaces(new Point3D(0.5, 0.5, 0.5));
-        transform(transform);
+        transform(definition.getTransformMatrix());
         prepareSurfaces();
         workOutVertexNormals();
     }

@@ -1,5 +1,8 @@
 package fr.arno750.e3d.base;
 
+import fr.arno750.e3d.base.config.Parameters;
+import fr.arno750.e3d.base.config.VolumeDefinition;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +12,8 @@ public class Volume {
     protected List<Vertex> vertices = new ArrayList<>();
     protected List<Surface> surfaces = new ArrayList<>();
 
-    public Volume() {
+    public Volume(VolumeDefinition definition) {
+        name = definition.getName();
     }
 
     /**
