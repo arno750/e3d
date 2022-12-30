@@ -7,9 +7,9 @@ public class Transform {
     private double tx;
     private double ty;
     private double tz;
-    private double sx;
-    private double sy;
-    private double sz;
+    private double sx = 1.0;
+    private double sy = 1.0;
+    private double sz = 1.0;
     private double alpha;
     private double beta;
     private double gamma;

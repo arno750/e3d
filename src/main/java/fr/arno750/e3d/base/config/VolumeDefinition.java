@@ -4,7 +4,7 @@ import fr.arno750.e3d.base.Matrix;
 
 public class VolumeDefinition {
     private String name;
-    private String status;
+    private Status status;
     private String type;
 
     private Parameters parameters;
@@ -22,11 +22,11 @@ public class VolumeDefinition {
         this.name = name;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

@@ -1,10 +1,10 @@
 volumes:
   - name: "Box #1"
-    status: ignored
+    status: rendered
     type: Box
     transform:
       tx: -.5
-      ty: -.5
+      ty: -1
       tz: -.5
 
   - name: "Box #2"
