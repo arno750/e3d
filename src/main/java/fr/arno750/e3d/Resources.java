@@ -10,7 +10,9 @@ import java.util.ResourceBundle;
 
 public class Resources {
 
-    /** Logger. */
+    /**
+     * Logger.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(Resources.class);
 
     String name;

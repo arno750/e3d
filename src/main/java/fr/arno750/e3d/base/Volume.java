@@ -1,6 +1,5 @@
 package fr.arno750.e3d.base;
 
-import fr.arno750.e3d.base.config.Parameters;
 import fr.arno750.e3d.base.config.VolumeDefinition;
 
 import java.util.ArrayList;

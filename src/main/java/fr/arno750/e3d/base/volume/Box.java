@@ -1,7 +1,9 @@
 package fr.arno750.e3d.base.volume;
 
-import fr.arno750.e3d.base.*;
-import fr.arno750.e3d.base.config.Parameters;
+import fr.arno750.e3d.base.Point3D;
+import fr.arno750.e3d.base.Surface;
+import fr.arno750.e3d.base.Vertex;
+import fr.arno750.e3d.base.Volume;
 import fr.arno750.e3d.base.config.VolumeDefinition;
 
 public class Box extends Volume {
