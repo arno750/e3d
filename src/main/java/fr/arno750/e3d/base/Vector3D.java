@@ -100,6 +100,20 @@ public class Vector3D {
     }
 
     /**
+     * Changes the vector to the specified length, not modifying its direction.
+     *
+     * @param length the requested length.
+     * @return itself.
+     */
+    public Vector3D setLength(double length) {
+        double ratio = length / getLength();
+        i *= ratio;
+        j *= ratio;
+        k *= ratio;
+        return this;
+    }
+
+    /**
      * Reverses the initial and terminal points by multiplying the vector components
      * by -1.
      *
@@ -123,16 +137,16 @@ public class Vector3D {
     }
 
     /**
-     * Changes the vector to the specified length, not modifying its direction.
+     * Add the specified vector each component of which has been multiplied by the specified multiplier.
      *
-     * @param length the requested length.
+     * @param v          the vector to add.
+     * @param multiplier a multiplier.
      * @return itself.
      */
-    public Vector3D setLength(double length) {
-        double ratio = length / getLength();
-        i *= ratio;
-        j *= ratio;
-        k *= ratio;
+    public Vector3D addVector(Vector3D v, double multiplier) {
+        i += v.i * multiplier;
+        j += v.j * multiplier;
+        k += v.k * multiplier;
         return this;
     }
 

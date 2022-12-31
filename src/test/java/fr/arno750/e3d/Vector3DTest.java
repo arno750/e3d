@@ -67,6 +67,15 @@ class Vector3DTest {
     }
 
     @Test
+    void whenAddVector() {
+        Vector3D v = new Vector3D(1, 2, 3);
+        v.addVector(new Vector3D(2, 4, 6), 10);
+        assertEquals(1 + 2 * 10, v.i);
+        assertEquals(2 + 4 * 10, v.j);
+        assertEquals(3 + 6 * 10, v.k);
+    }
+
+    @Test
     void whenMultiply() {
         Vector3D v = new Vector3D(1, 1000, 77777);
         Matrix m = new Matrix(5, 0, 0, 0, 7, 1, 0, 0, 2, 0, 1, 0, 3, 0, 0, 0);
