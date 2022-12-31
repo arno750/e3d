@@ -10,12 +10,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.Serial;
 
 /**
  * Based on JSpinField by Kai Toedter (kai@toedter.com, www.toedter.com)
  */
 public class JSpinField extends JPanel implements ChangeListener, CaretListener, ActionListener, FocusListener {
 
+    @Serial
     private static final long serialVersionUID = 6681418088755325567L;
 
     protected JSpinner spinner;
@@ -72,6 +74,7 @@ public class JSpinField extends JPanel implements ChangeListener, CaretListener,
         model = new SpinnerNumberModel(this.value, this.minimum, this.maximum, this.stepSize);
         spinner = new JSpinner(model) {
 
+            @Serial
             private static final long serialVersionUID = 3682086601092749841L;
 
             public Dimension getPreferredSize() {

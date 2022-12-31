@@ -7,12 +7,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
+import java.io.Serial;
 import java.text.DecimalFormat;
 
 public class CommandPanel extends JPanel {
 
     public static final DecimalFormat NUMBER_FORMAT = new DecimalFormat("0.0");
-    private static final long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 5467976891976345050L;
     Context context;
     JSpinField focal;
     JSpinField resolution;

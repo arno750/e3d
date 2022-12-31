@@ -7,12 +7,14 @@ import fr.arno750.e3d.render.SurfaceType;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serial;
 
 public class RenderingPanel extends JPanel {
 
-    private static final long serialVersionUID = 1L;
     static final Stroke DEFAULT_STROKE = new BasicStroke(1.0f);
     static final Stroke THICK_STROKE = new BasicStroke(2.0f);
+    @Serial
+    private static final long serialVersionUID = -749852770402369917L;
     static Color[] GRAYS = new Color[256];
 
     static {

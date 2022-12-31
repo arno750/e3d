@@ -1,9 +1,11 @@
 package fr.arno750.e3d.gui;
 
 import java.awt.*;
+import java.io.Serial;
 
 public class GridBagHelper extends GridBagConstraints {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

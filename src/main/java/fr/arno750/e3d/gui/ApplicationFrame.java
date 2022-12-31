@@ -8,10 +8,12 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.Serial;
 
 public class ApplicationFrame extends JFrame {
 
-    private static final long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 7187814202647201494L;
     Context context;
     String title;
     JPanel mainPanel;
