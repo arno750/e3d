@@ -89,17 +89,18 @@ public class Volume {
     protected void workOutVertexNormals() {
         for (Vertex v : vertices) {
             v.n = new Vector3D();
-            for (Surface s : surfaces) {
-                if (s.contains(v)) {
-                    double area = s.getArea();
-                    v.n.i += s.n.i * area;
-                    v.n.j += s.n.j * area;
-                    v.n.k += s.n.k * area;
-                }
-            }
+        }
+        for (Surface s : surfaces) {
+            double area = s.getArea();
+            s.a.n.addVector(s.n, area);
+            s.b.n.addVector(s.n, area);
+            s.c.n.addVector(s.n, area);
+        }
+        for (Vertex v : vertices) {
             v.n.normalize();
         }
     }
+
 
     /**
      * @param steps
