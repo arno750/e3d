@@ -6,6 +6,7 @@ volumes:
       tx: -.5
       ty: -1.01
       tz: -.5
+      sx: 1.5
 
   - name: "Box #2"
     status: ignored
@@ -32,25 +33,28 @@ volumes:
       tz: -1
 
   - name: "Sphere"
-    status: ignored
+    status: rendered
     type: Sphere
     parameters:
       latitudes: 24
       longitudes: 32
     transform:
+      tx: -4.5
+      ty: 1.1
       sx: 0.1
       sy: 0.1
       sz: 0.1
 
   - name: "Torus"
-    status: ignored
+    status: rendered
     type: Torus
     parameters:
       ratio: 0.5
       latitudes: 16
       longitudes: 16
     transform:
-      tx: 3
+      tx: 4.5
+      ty: 0.6
       sx: 0.1
       sy: 0.1
       sz: 0.1
