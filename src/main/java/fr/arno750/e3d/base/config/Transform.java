@@ -14,11 +14,11 @@ public class Transform {
     private double sx = 1.0;
     private double sy = 1.0;
     private double sz = 1.0;
-    private double alpha;
-    private double beta;
-    private double gamma;
+    private double rx;
+    private double ry;
+    private double rz;
 
     public Matrix getTransform() {
-        return Matrix.getTransform(tx, ty, tz, sx, sy, sz, alpha, beta, gamma);
+        return Matrix.getTransform(tx, ty, tz, sx, sy, sz, rx, ry, rz);
     }
 }

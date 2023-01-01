@@ -107,7 +107,7 @@ public class Controller {
         context.distance = context.observer.getDistanceFromOrigin();
 
         context.transform = Matrix.getTransform(-context.observer.x, -context.observer.y, -context.observer.z, 1.0, 1.0,
-                1.0, context.alpha, context.beta, context.gamma);
+                1.0, context.alpha, context.gamma, context.beta);
 
         System.out.format("transform:\n%s", context.transform);
     }

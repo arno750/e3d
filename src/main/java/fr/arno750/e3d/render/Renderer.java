@@ -43,6 +43,7 @@ public class Renderer {
                 }
             }
         }
+        points.clear();
         Collections.sort(renderedSurfaces);
         return renderedSurfaces;
     }

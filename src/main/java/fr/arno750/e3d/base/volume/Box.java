@@ -37,6 +37,14 @@ public class Box extends Volume {
         workOutVertexNormals();
     }
 
+    /**
+     * @param a
+     * @param b
+     * @param c
+     * @param steps
+     * @param map
+     * @param vertexFactory
+     */
     private void splitTriangle(Vertex a, Vertex b, Vertex c, int steps, Map<Integer, Vertex> map, VertexFactory vertexFactory) {
         Vertex mab = getMiddle(a, b, map, vertexFactory);
         Vertex mbc = getMiddle(b, c, map, vertexFactory);
@@ -54,6 +62,13 @@ public class Box extends Volume {
         }
     }
 
+    /**
+     * @param a
+     * @param b
+     * @param map
+     * @param vertexFactory
+     * @return
+     */
     private Vertex getMiddle(Vertex a, Vertex b, Map<Integer, Vertex> map, VertexFactory vertexFactory) {
         int key = (a.id << 16) + b.id;
         Vertex v = map.get(key);

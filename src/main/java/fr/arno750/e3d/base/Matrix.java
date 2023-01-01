@@ -101,75 +101,46 @@ public class Matrix {
     /**
      * Returns a rotation matrix around the X axis. It is an identity matrix with rotations on YZ coordinates.
      *
-     * @param theta an angle, in radians.
+     * @param rx an angle, in radians.
      * @return the rotation matrix.
      */
-    public static Matrix getXRotation(double theta) {
+    public static Matrix getXRotation(double rx) {
         Matrix m = getIdentity();
-        m.m11 = Math.cos(theta);
-        m.m12 = Math.sin(theta);
-        m.m21 = -Math.sin(theta);
-        m.m22 = Math.cos(theta);
+        m.m11 = Math.cos(rx);
+        m.m12 = Math.sin(rx);
+        m.m21 = -Math.sin(rx);
+        m.m22 = Math.cos(rx);
         return m;
     }
 
     /**
      * Returns a rotation matrix around the Y axis. It is an identity matrix with rotations on XZ coordinates.
      *
-     * @param theta an angle, in radians.
+     * @param ry an angle, in radians.
      * @return the rotation matrix.
      */
-    public static Matrix getYRotation(double theta) {
+    public static Matrix getYRotation(double ry) {
         Matrix m = getIdentity();
-        m.m00 = Math.cos(theta);
-        m.m02 = -Math.sin(theta);
-        m.m20 = Math.sin(theta);
-        m.m22 = Math.cos(theta);
+        m.m00 = Math.cos(ry);
+        m.m02 = -Math.sin(ry);
+        m.m20 = Math.sin(ry);
+        m.m22 = Math.cos(ry);
         return m;
     }
 
     /**
      * Returns a rotation matrix around the Z axis. It is an identity matrix with rotations on XY coordinates.
      *
-     * @param theta an angle, in radians.
+     * @param rz an angle, in radians.
      * @return the rotation matrix.
      */
-    public static Matrix getZRotation(double theta) {
+    public static Matrix getZRotation(double rz) {
         Matrix m = getIdentity();
-        m.m00 = Math.cos(theta);
-        m.m01 = Math.sin(theta);
-        m.m10 = -Math.sin(theta);
-        m.m11 = Math.cos(theta);
+        m.m00 = Math.cos(rz);
+        m.m01 = Math.sin(rz);
+        m.m10 = -Math.sin(rz);
+        m.m11 = Math.cos(rz);
         return m;
-    }
-
-
-    /**
-     * Converts an angle in degrees to an angle in radians.
-     *
-     * @param deg an angle, in degrees.
-     * @return the angle, in radians.
-     */
-    private static double deg2rad(double deg) {
-        return deg / 180.0 * Math.PI;
-    }
-
-    /**
-     * @param tx
-     * @param ty
-     * @param tz
-     * @param sx
-     * @param sy
-     * @param sz
-     * @param alpha
-     * @param beta
-     * @param gamma
-     * @return
-     */
-    public static Matrix getTransformRad(double tx, double ty, double tz, double sx, double sy, double sz, double alpha,
-                                         double beta, double gamma) {
-
-        return getTransform(tx, ty, tz, sx, sy, sz, deg2rad(alpha), deg2rad(beta), deg2rad(gamma));
     }
 
     /**
@@ -181,21 +152,21 @@ public class Matrix {
      * @param sx
      * @param sy
      * @param sz
-     * @param alpha
-     * @param beta
-     * @param gamma
+     * @param rx
+     * @param ry
+     * @param rz
      * @return
      */
-    public static Matrix getTransform(double tx, double ty, double tz, double sx, double sy, double sz, double alpha,
-                                      double beta, double gamma) {
+    public static Matrix getTransform(double tx, double ty, double tz, double sx, double sy, double sz, double rx
+            , double ry,double rz) {
 
         if ((sx < 0) || (sy < 0) || (sz < 0))
             throw new IllegalArgumentException("Illegal argument: negative scaling value");
 
         Matrix mt = Matrix.getTranslation(tx, ty, tz);
-        Matrix mrx = Matrix.getXRotation(alpha);
-        Matrix mry = Matrix.getYRotation(gamma);
-        Matrix mrz = Matrix.getZRotation(beta);
+        Matrix mrx = Matrix.getXRotation(rx);
+        Matrix mry = Matrix.getYRotation(ry);
+        Matrix mrz = Matrix.getZRotation(rz);
         Matrix ms = Matrix.getScaling(sx, sy, sz);
 
         return Matrix.multiply(mt, Matrix.multiply(mry, Matrix.multiply(mrz, Matrix.multiply(mrx, ms))));
