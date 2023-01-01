@@ -2,7 +2,7 @@ package fr.arno750.e3d.base.volume;
 
 import fr.arno750.e3d.base.Point3D;
 import fr.arno750.e3d.base.Surface;
-import fr.arno750.e3d.base.Vertex;
+import fr.arno750.e3d.base.VertexFactory;
 import fr.arno750.e3d.base.Volume;
 import fr.arno750.e3d.base.config.VolumeDefinition;
 
@@ -15,13 +15,13 @@ public class Box extends Volume {
 
     /**
      * @param definition
-     * @return
+     * @param vertexFactory
      */
-    public Box(VolumeDefinition definition) {
-        super(definition);
+    public Box(VolumeDefinition definition, VertexFactory vertexFactory) {
+        super(definition, vertexFactory);
 
         for (double[] coordinates : VERTICES) {
-            vertices.add(new Vertex(coordinates[0], coordinates[1],
+            vertices.add(vertexFactory.build(coordinates[0], coordinates[1],
                     coordinates[2]));
         }
 

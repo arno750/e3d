@@ -2,7 +2,7 @@ package fr.arno750.e3d.base.volume;
 
 import fr.arno750.e3d.base.Point3D;
 import fr.arno750.e3d.base.Surface;
-import fr.arno750.e3d.base.Vertex;
+import fr.arno750.e3d.base.VertexFactory;
 import fr.arno750.e3d.base.Volume;
 import fr.arno750.e3d.base.config.VolumeDefinition;
 
@@ -10,10 +10,10 @@ public class Torus extends Volume {
 
     /**
      * @param definition
-     * @return
+     * @param vertexFactory
      */
-    public Torus(VolumeDefinition definition) {
-        super(definition);
+    public Torus(VolumeDefinition definition, VertexFactory vertexFactory) {
+        super(definition, vertexFactory);
 
         double ratio = definition.getParameters().getRatio();
         int latitudes = definition.getParameters().getLatitudes();
@@ -25,7 +25,7 @@ public class Torus extends Volume {
                 double theta = 2 * Math.PI * i / latitudes;
                 double phi = 2 * Math.PI * j / longitudes;
 
-                vertices.add(new Vertex((1 + ratio * Math.cos(theta))
+                vertices.add(vertexFactory.build((1 + ratio * Math.cos(theta))
                         * Math.cos(phi), ratio * Math.sin(theta), (1 + ratio
                         * Math.cos(theta))
                         * Math.sin(phi)));

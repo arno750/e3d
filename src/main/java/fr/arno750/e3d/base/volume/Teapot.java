@@ -1,5 +1,6 @@
 package fr.arno750.e3d.base.volume;
 
+import fr.arno750.e3d.base.VertexFactory;
 import fr.arno750.e3d.base.Volume;
 import fr.arno750.e3d.base.config.VolumeDefinition;
 
@@ -181,13 +182,14 @@ public class Teapot extends Volume {
 
     /**
      * @param definition
+     * @param vertexFactory
      */
-    public Teapot(VolumeDefinition definition) {
-        super(definition);
+    public Teapot(VolumeDefinition definition, VertexFactory vertexFactory) {
+        super(definition, vertexFactory);
 
         coefficients = getBernsteinBasisFunction(definition.getParameters().getSteps());
         for (int[] patch : PATCHES)
-            addBezierPatch(definition.getParameters().getSteps(), coefficients, VERTICES, patch);
+            addBezierPatch(definition.getParameters().getSteps(), coefficients, VERTICES, patch, vertexFactory);
 
         transform(definition.getTransformMatrix());
         prepareSurfaces();

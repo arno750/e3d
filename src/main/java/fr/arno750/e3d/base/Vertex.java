@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Vertex {
 
+    public int id;
     public Point3D p;
     public Vector3D n;
 
@@ -13,20 +14,24 @@ public class Vertex {
     /**
      * Constructs a vertex.
      *
-     * @param p a point.
+     * @param id identifier
+     * @param p  a point.
      */
-    public Vertex(Point3D p) {
+    public Vertex(int id, Point3D p) {
+        this.id = id;
         this.p = p;
     }
 
     /**
      * Constructs a vertex.
      *
-     * @param x first coordinate.
-     * @param y second coordinate.
-     * @param z third coordinate.
+     * @param id identifier
+     * @param x  first coordinate.
+     * @param y  second coordinate.
+     * @param z  third coordinate.
      */
-    public Vertex(double x, double y, double z) {
+    public Vertex(int id, double x, double y, double z) {
+        this.id = id;
         this.p = new Point3D(x, y, z);
     }
 

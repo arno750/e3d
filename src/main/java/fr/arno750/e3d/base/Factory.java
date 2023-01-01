@@ -19,15 +19,16 @@ public class Factory {
         Volumes volumes = yaml.loadAs(Scene.class.getResourceAsStream(sceneConfigurationName), Volumes.class);
 
         Scene scene = new Scene();
+        VertexFactory vertexFactory = new VertexFactory();
 
         for (VolumeDefinition definition : volumes.getVolumes()) {
             if (definition.getStatus() == Status.rendered) {
                 Volume newVolume = switch (definition.getType()) {
-                    case "Box" -> new Box(definition);
-                    case "Sphere" -> new Sphere(definition);
-                    case "Torus" -> new Torus(definition);
-                    case "BezierPatch" -> new BezierPatch(definition);
-                    case "Teapot" -> new Teapot(definition);
+                    case "Box" -> new Box(definition, vertexFactory);
+                    case "Sphere" -> new Sphere(definition, vertexFactory);
+                    case "Torus" -> new Torus(definition, vertexFactory);
+                    case "BezierPatch" -> new BezierPatch(definition, vertexFactory);
+                    case "Teapot" -> new Teapot(definition, vertexFactory);
                     default ->
                             throw new IllegalArgumentException(String.format("Unsupported type %s", definition.getType()));
                 };

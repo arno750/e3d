@@ -2,7 +2,7 @@ package fr.arno750.e3d.base.volume;
 
 import fr.arno750.e3d.base.Point3D;
 import fr.arno750.e3d.base.Surface;
-import fr.arno750.e3d.base.Vertex;
+import fr.arno750.e3d.base.VertexFactory;
 import fr.arno750.e3d.base.Volume;
 import fr.arno750.e3d.base.config.VolumeDefinition;
 
@@ -10,10 +10,10 @@ public class Sphere extends Volume {
 
     /**
      * @param definition
-     * @return
+     * @param vertexFactory
      */
-    public Sphere(VolumeDefinition definition) {
-        super(definition);
+    public Sphere(VolumeDefinition definition, VertexFactory vertexFactory) {
+        super(definition, vertexFactory);
 
         int latitudes = definition.getParameters().getLatitudes();
         int longitudes = definition.getParameters().getLongitudes();
@@ -27,11 +27,11 @@ public class Sphere extends Volume {
                 double phi = Math.PI * j / halfLongitudes;
 
                 if (Math.abs(i) == halfLatitudes) {
-                    vertices.add(new Vertex(0, Math.sin(theta), 0));
+                    vertices.add(vertexFactory.build(0, Math.sin(theta), 0));
                     break;
                 }
 
-                vertices.add(new Vertex(Math.cos(theta) * Math.cos(phi), Math
+                vertices.add(vertexFactory.build(Math.cos(theta) * Math.cos(phi), Math
                         .sin(theta), Math.cos(theta) * Math.sin(phi)));
             }
         }

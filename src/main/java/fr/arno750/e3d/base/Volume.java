@@ -11,7 +11,11 @@ public class Volume {
     protected List<Vertex> vertices = new ArrayList<>();
     protected List<Surface> surfaces = new ArrayList<>();
 
-    public Volume(VolumeDefinition definition) {
+    /**
+     * @param definition
+     * @param vertexFactory
+     */
+    public Volume(VolumeDefinition definition, VertexFactory vertexFactory) {
         name = definition.getName();
     }
 
@@ -107,8 +111,9 @@ public class Volume {
      * @param coefficients
      * @param data
      * @param indices
+     * @maram vertexFactory
      */
-    public void addBezierPatch(int steps, double[][] coefficients, double[][] data, int[] indices) {
+    public void addBezierPatch(int steps, double[][] coefficients, double[][] data, int[] indices, VertexFactory vertexFactory) {
         int start = vertices.size();
         double coefficient;
         for (int u = 0; u < steps; u++)
@@ -126,7 +131,7 @@ public class Volume {
                         k++;
                     }
 
-                vertices.add(new Vertex(p));
+                vertices.add(vertexFactory.build(p));
             }
 
         for (int u = 0; u < steps - 1; u++)
