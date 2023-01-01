@@ -159,9 +159,9 @@ public class CommandPanel extends JPanel {
         center.addActionListener(event -> {
             updateContext();
             Controller.lookTowardsOrigin();
-            pitch.adjustValue(context.alpha * 180.0 / Math.PI);
-            roll.adjustValue(context.beta * 180.0 / Math.PI);
-            yaw.adjustValue(context.gamma * 180.0 / Math.PI);
+            pitch.adjustValue(Math.toDegrees(context.alpha));
+            roll.adjustValue(Math.toDegrees(context.beta));
+            yaw.adjustValue(Math.toDegrees(context.gamma));
 
             Controller.updateContext();
             distance.adjustValue(context.distance);
@@ -197,9 +197,9 @@ public class CommandPanel extends JPanel {
                 updateContext();
                 if (autoCenter.isSelected()) {
                     Controller.lookTowardsOrigin();
-                    pitch.adjustValue(context.alpha * 180.0 / Math.PI);
-                    roll.adjustValue(context.beta * 180.0 / Math.PI);
-                    yaw.adjustValue(context.gamma * 180.0 / Math.PI);
+                    pitch.adjustValue(Math.toDegrees(context.alpha));
+                    roll.adjustValue(Math.toDegrees(context.beta));
+                    yaw.adjustValue(Math.toDegrees(context.gamma));
 
                 }
                 Controller.updateContext();
@@ -252,9 +252,9 @@ public class CommandPanel extends JPanel {
         xObserver.setValue(context.observer.x);
         yObserver.setValue(context.observer.y);
         zObserver.setValue(context.observer.z);
-        pitch.setValue(context.alpha * 180.0 / Math.PI);
-        roll.setValue(context.beta * 180.0 / Math.PI);
-        yaw.setValue(context.gamma * 180.0 / Math.PI);
+        pitch.setValue(Math.toDegrees(context.alpha));
+        roll.setValue(Math.toDegrees(context.beta));
+        yaw.setValue(Math.toDegrees(context.gamma));
 
         axis.setSelected(context.axis);
         hiddenSurfaceRemoval.setSelected(context.hiddenSurfaceRemoval);
@@ -271,9 +271,9 @@ public class CommandPanel extends JPanel {
         context.observer.x = xObserver.getValue();
         context.observer.y = yObserver.getValue();
         context.observer.z = zObserver.getValue();
-        context.alpha = Math.PI * pitch.getValue() / 180.0;
-        context.beta = Math.PI * roll.getValue() / 180.0;
-        context.gamma = Math.PI * yaw.getValue() / 180.0;
+        context.alpha = Math.toRadians(pitch.getValue());
+        context.beta = Math.toRadians(roll.getValue());
+        context.gamma = Math.toRadians(yaw.getValue());
 
         context.axis = axis.isSelected();
         context.hiddenSurfaceRemoval = hiddenSurfaceRemoval.isSelected();
