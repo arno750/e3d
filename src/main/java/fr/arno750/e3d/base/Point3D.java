@@ -69,7 +69,7 @@ public class Point3D {
      * @return the middle point.
      */
     public static Point3D getMiddle(Point3D a, Point3D b) {
-        return new Point3D((a.x + b.x) / 2, (a.y + b.y) / 2, (a.z + b.z) / 2);
+        return new Point3D((a.x + b.x) / 2.0, (a.y + b.y) / 2.0, (a.z + b.z) / 2.0);
     }
 
     /**
@@ -81,7 +81,7 @@ public class Point3D {
      * @return the middle point.
      */
     public static Point3D getMiddle(Point3D a, Point3D b, Point3D c) {
-        return new Point3D((a.x + b.x + c.x) / 3, (a.y + b.y + c.y) / 3, (a.z + b.z + c.z) / 3);
+        return new Point3D((a.x + b.x + c.x) / 3.0, (a.y + b.y + c.y) / 3.0, (a.z + b.z + c.z) / 3.0);
     }
 
     /**

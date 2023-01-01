@@ -2,6 +2,8 @@ volumes:
   - name: "Box #1"
     status: rendered
     type: Box
+    parameters:
+      steps: 3
     transform:
       tx: -.5
       ty: -1.01
@@ -11,6 +13,8 @@ volumes:
   - name: "Box #2"
     status: ignored
     type: Box
+    parameters:
+      steps: 0
     transform:
       tx: 1
       sx: 2
@@ -19,6 +23,8 @@ volumes:
   - name: "Box #3"
     status: ignored
     type: Box
+    parameters:
+      steps: 0
     transform:
       tx: 3
       sx: 3
@@ -27,6 +33,8 @@ volumes:
   - name: "Box #4"
     status: ignored
     type: Box
+    parameters:
+      steps: 0
     transform:
       tx: 4
       ty: 1

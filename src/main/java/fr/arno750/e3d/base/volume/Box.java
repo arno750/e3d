@@ -1,10 +1,10 @@
 package fr.arno750.e3d.base.volume;
 
-import fr.arno750.e3d.base.Point3D;
-import fr.arno750.e3d.base.Surface;
-import fr.arno750.e3d.base.VertexFactory;
-import fr.arno750.e3d.base.Volume;
+import fr.arno750.e3d.base.*;
 import fr.arno750.e3d.base.config.VolumeDefinition;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Box extends Volume {
     static final double[][] VERTICES = {{0, 0, 0}, {1, 0, 0}, {1, 1, 0},
@@ -25,17 +25,42 @@ public class Box extends Volume {
                     coordinates[2]));
         }
 
+        Map<Integer, Vertex> map = new HashMap<>();
         for (int[] indices : SURFACES) {
-            Surface s = new Surface();
-            s.a = vertices.get(indices[0]);
-            s.b = vertices.get(indices[1]);
-            s.c = vertices.get(indices[2]);
-            surfaces.add(s);
+            splitTriangle(vertices.get(indices[0]), vertices.get(indices[1]), vertices.get(indices[2]), definition.getParameters().getSteps(), map, vertexFactory);
         }
+        vertices.addAll(map.values());
 
         prepareSurfaces(new Point3D(0.5, 0.5, 0.5));
         transform(definition.getTransformMatrix());
         prepareSurfaces();
         workOutVertexNormals();
+    }
+
+    private void splitTriangle(Vertex a, Vertex b, Vertex c, int steps, Map<Integer, Vertex> map, VertexFactory vertexFactory) {
+        Vertex mab = getMiddle(a, b, map, vertexFactory);
+        Vertex mbc = getMiddle(b, c, map, vertexFactory);
+        Vertex mac = getMiddle(a, c, map, vertexFactory);
+        if (steps <= 1) {
+            surfaces.add(new Surface(a, mab, mac));
+            surfaces.add(new Surface(b, mbc, mab));
+            surfaces.add(new Surface(c, mac, mbc));
+            surfaces.add(new Surface(mab, mbc, mac));
+        } else {
+            splitTriangle(a, mab, mac, steps - 1, map, vertexFactory);
+            splitTriangle(b, mbc, mab, steps - 1, map, vertexFactory);
+            splitTriangle(c, mac, mbc, steps - 1, map, vertexFactory);
+            splitTriangle(mab, mbc, mac, steps - 1, map, vertexFactory);
+        }
+    }
+
+    private Vertex getMiddle(Vertex a, Vertex b, Map<Integer, Vertex> map, VertexFactory vertexFactory) {
+        int key = (a.id << 16) + b.id;
+        Vertex v = map.get(key);
+        if (v == null) {
+            v = vertexFactory.build(Point3D.getMiddle(a.p, b.p));
+            map.put(key, v);
+        }
+        return v;
     }
 }
