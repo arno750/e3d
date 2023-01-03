@@ -7,11 +7,17 @@ public class Matrix {
     public double m20, m21, m22, m23;
     public double m30, m31, m32, m33;
 
-    public Matrix() {
+    private Matrix() {
     }
 
     /**
-     * Constructs a new 4x4 matrix.
+     * Constructs a new 4x4 matrix:
+     * <pre>
+     * m00 m01 m02 m03
+     * m10 m11 m12 m13
+     * m20 m21 m22 m23
+     * m30 m31 m32 m33
+     * </pre>
      *
      * @param m00 component row #0 column #0
      * @param m01 component row #0 column #1
@@ -47,6 +53,39 @@ public class Matrix {
         this.m31 = m31;
         this.m32 = m32;
         this.m33 = m33;
+    }
+
+    /**
+     * Returns the determinant of the following 3x3 matrix noted as:
+     * <pre>
+     * |  a  b  c  |
+     * |  d  e  f  |
+     * |  g  h  i  |
+     * </pre>
+     *
+     * @param a
+     * @param b
+     * @param c
+     * @param d
+     * @param e
+     * @param f
+     * @param g
+     * @param h
+     * @param i
+     * @return
+     */
+    public static double getDeterminant(double a, double b, double c, double d, double e, double f, double g, double h,
+                                        double i) {
+        return a * (e * i - f * h) - b * (d * i - f * g) + c * (d * h - e * g);
+    }
+
+    /**
+     * Returns the null matrix with only zeros.
+     *
+     * @return the null matrix.
+     */
+    public static Matrix getNull() {
+        return new Matrix();
     }
 
     /**
@@ -157,8 +196,7 @@ public class Matrix {
      * @param rz
      * @return
      */
-    public static Matrix getTransform(double tx, double ty, double tz, double sx, double sy, double sz, double rx
-            , double ry,double rz) {
+    public static Matrix getTransform(double tx, double ty, double tz, double sx, double sy, double sz, double rx, double ry, double rz) {
 
         if ((sx < 0) || (sy < 0) || (sz < 0))
             throw new IllegalArgumentException("Illegal argument: negative scaling value");
@@ -275,6 +313,28 @@ public class Matrix {
     }
 
     /**
+     * Returns the determinant of the matrix.
+     * <pre>
+     * m00 m01 m02 m03
+     * m10 m11 m12 m13
+     * m20 m21 m22 m23
+     * m30 m31 m32 m33
+     *
+     *       | m11 m12 m13 |         | m10 m12 m13 |         | m10 m11 m13 |         | m10 m11 m12 |
+     * m00 x | m21 m22 m23 | - m01 x | m20 m22 m23 | + m02 x | m20 m21 m23 | - m03 x | m20 m21 m22 |
+     *       | m31 m32 m33 |         | m30 m32 m33 |         | m30 m31 m33 |         | m30 m31 m32 |
+     * </pre>
+     *
+     * @return the determinant.
+     */
+    public double getDeterminant() {
+        return m00 * getDeterminant(m11, m12, m13, m21, m22, m23, m31, m32, m33)
+                - m01 * getDeterminant(m10, m12, m13, m20, m22, m23, m30, m32, m33)
+                + m02 * getDeterminant(m10, m11, m13, m20, m21, m23, m30, m31, m33)
+                - m03 * getDeterminant(m10, m11, m12, m20, m21, m22, m30, m31, m32);
+    }
+
+    /**
      * Adds this matrix S and the specified 4x4 matrix M:
      * <p>
      * <tt>S += M</tt>
@@ -305,8 +365,70 @@ public class Matrix {
 
     @Override
     public String toString() {
-        return String.format(
-                "| %.1f %.1f %.1f %.1f |\n| %.1f %.1f %.1f %.1f |\n| %.1f %.1f %.1f %.1f |\n| %.1f %.1f %.1f %.1f |\n",
-                m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33);
+        return String.format("| %.1f %.1f %.1f %.1f |\n| %.1f %.1f %.1f %.1f |\n| %.1f %.1f %.1f %.1f |\n| %.1f %.1f %.1f %.1f |\n", m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Matrix matrix = (Matrix) o;
+
+        if (Double.compare(matrix.m00, m00) != 0) return false;
+        if (Double.compare(matrix.m01, m01) != 0) return false;
+        if (Double.compare(matrix.m02, m02) != 0) return false;
+        if (Double.compare(matrix.m03, m03) != 0) return false;
+        if (Double.compare(matrix.m10, m10) != 0) return false;
+        if (Double.compare(matrix.m11, m11) != 0) return false;
+        if (Double.compare(matrix.m12, m12) != 0) return false;
+        if (Double.compare(matrix.m13, m13) != 0) return false;
+        if (Double.compare(matrix.m20, m20) != 0) return false;
+        if (Double.compare(matrix.m21, m21) != 0) return false;
+        if (Double.compare(matrix.m22, m22) != 0) return false;
+        if (Double.compare(matrix.m23, m23) != 0) return false;
+        if (Double.compare(matrix.m30, m30) != 0) return false;
+        if (Double.compare(matrix.m31, m31) != 0) return false;
+        if (Double.compare(matrix.m32, m32) != 0) return false;
+        return Double.compare(matrix.m33, m33) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(m00);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(m01);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(m02);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(m03);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(m10);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(m11);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(m12);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(m13);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(m20);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(m21);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(m22);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(m23);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(m30);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(m31);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(m32);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(m33);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
 }
