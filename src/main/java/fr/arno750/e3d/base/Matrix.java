@@ -13,10 +13,12 @@ public class Matrix {
     /**
      * Constructs a new 4x4 matrix:
      * <pre>
-     * m00 m01 m02 m03
-     * m10 m11 m12 m13
-     * m20 m21 m22 m23
-     * m30 m31 m32 m33
+     * [
+     *  m00 m01 m02 m03
+     *  m10 m11 m12 m13
+     *  m20 m21 m22 m23
+     *  m30 m31 m32 m33
+     * ]
      * </pre>
      *
      * @param m00 component row #0 column #0
@@ -105,7 +107,15 @@ public class Matrix {
 
     /**
      * Returns a translation matrix. It is based on an identity matrix with displacements
-     * on the last row.
+     * on the last row:
+     * <pre>
+     * [
+     *  1 0 0 Tx
+     *  0 1 0 Ty
+     *  0 0 1 Tz
+     *  0 0 0 1
+     * ]
+     * </pre>
      *
      * @param tx x displacement.
      * @param ty y displacement.
@@ -122,7 +132,15 @@ public class Matrix {
 
     /**
      * Returns a scaling matrix. It is an identity matrix with scaling factors on the main
-     * diagonal.
+     * diagonal:
+     * <pre>
+     * [
+     *  Sx 0  0  0
+     *  0  Sy 0  0
+     *  0  0  Sz 0
+     *  0  0  0  1
+     * ]
+     * </pre>
      *
      * @param sx x scaling factor.
      * @param sy y scaling factor.
@@ -138,7 +156,15 @@ public class Matrix {
     }
 
     /**
-     * Returns a rotation matrix around the X axis. It is an identity matrix with rotations on YZ coordinates.
+     * Returns a rotation matrix around the X axis. It is an identity matrix with rotations on YZ coordinates:
+     * <pre>
+     * [
+     *  1 0     0     0
+     *  0 cosθ  sinθ  0
+     *  0 -sinθ cosθ  0
+     *  0 0     0     1
+     * ]
+     * </pre>
      *
      * @param rx an angle, in radians.
      * @return the rotation matrix.
@@ -153,7 +179,15 @@ public class Matrix {
     }
 
     /**
-     * Returns a rotation matrix around the Y axis. It is an identity matrix with rotations on XZ coordinates.
+     * Returns a rotation matrix around the Y axis. It is an identity matrix with rotations on XZ coordinates:
+     * <pre>
+     * [
+     *  cosθ 0 -sinθ 0
+     *  0    1 0     0
+     *  sinθ 0 cosθ  0
+     *  0    0 0     1
+     * ]
+     * </pre>
      *
      * @param ry an angle, in radians.
      * @return the rotation matrix.
@@ -168,7 +202,15 @@ public class Matrix {
     }
 
     /**
-     * Returns a rotation matrix around the Z axis. It is an identity matrix with rotations on XY coordinates.
+     * Returns a rotation matrix around the Z axis. It is an identity matrix with rotations on XY coordinates:
+     * <pre>
+     * [
+     *  cosθ  sinθ 0 0
+     *  -sinθ cosθ 0 0
+     *  0     0    1 0
+     *  0     0    0 1
+     * ]
+     * </pre>
      *
      * @param rz an angle, in radians.
      * @return the rotation matrix.
@@ -313,13 +355,17 @@ public class Matrix {
     }
 
     /**
-     * Returns the determinant of the matrix.
+     * Returns the determinant of the matrix
      * <pre>
-     * m00 m01 m02 m03
-     * m10 m11 m12 m13
-     * m20 m21 m22 m23
-     * m30 m31 m32 m33
-     *
+     * [
+     *  m00 m01 m02 m03
+     *  m10 m11 m12 m13
+     *  m20 m21 m22 m23
+     *  m30 m31 m32 m33
+     * ]
+     * </pre>
+     * calculated as:
+     * <pre>
      *       | m11 m12 m13 |         | m10 m12 m13 |         | m10 m11 m13 |         | m10 m11 m12 |
      * m00 x | m21 m22 m23 | - m01 x | m20 m22 m23 | + m02 x | m20 m21 m23 | - m03 x | m20 m21 m22 |
      *       | m31 m32 m33 |         | m30 m32 m33 |         | m30 m31 m33 |         | m30 m31 m32 |
