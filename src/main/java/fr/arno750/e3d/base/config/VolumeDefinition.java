@@ -14,6 +14,13 @@ public class VolumeDefinition {
     private Parameters parameters;
     private Transform transform;
 
+    public static VolumeDefinition getDefault() {
+        VolumeDefinition vd = new VolumeDefinition();
+        vd.setParameters(new Parameters());
+        vd.setTransform(new Transform());
+        return vd;
+    }
+
     public Matrix getTransformMatrix() {
         return transform.getTransform();
     }

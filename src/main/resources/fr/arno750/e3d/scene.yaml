@@ -58,8 +58,8 @@ volumes:
     type: Torus
     parameters:
       ratio: 0.5
-      latitudes: 16
-      longitudes: 16
+      latitudes: 32
+      longitudes: 64
     transform:
       tx: 4.5
       ty: 0.6

@@ -123,10 +123,20 @@ public class Point3D {
      * @return the calculated distance.
      */
     public double getDistance(Point3D a) {
+        return Math.sqrt(getSquaredDistance(a));
+    }
+
+    /**
+     * Returns the squared distance between this point and another point.
+     *
+     * @param a another point.
+     * @return the calculated squared distance.
+     */
+    public double getSquaredDistance(Point3D a) {
         double dx = x - a.x;
         double dy = y - a.y;
         double dz = z - a.z;
-        return Math.sqrt(dx * dx + dy * dy + dz * dz);
+        return dx * dx + dy * dy + dz * dz;
     }
 
     @Override

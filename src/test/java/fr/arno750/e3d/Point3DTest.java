@@ -31,18 +31,26 @@ class Point3DTest {
 
     @Test
     void getDistanceFromOrigin() {
-        assertEquals(new Point3D(77, 0, 0).getDistanceFromOrigin(), 77);
-        assertEquals(new Point3D(0, 55, 0).getDistanceFromOrigin(), 55);
-        assertEquals(new Point3D(0, 0, 11).getDistanceFromOrigin(), 11);
-        assertEquals(new Point3D(1, 2, 3).getDistanceFromOrigin(), Math.sqrt(14.0));
+        assertEquals(77, new Point3D(77, 0, 0).getDistanceFromOrigin());
+        assertEquals(55, new Point3D(0, 55, 0).getDistanceFromOrigin());
+        assertEquals(11, new Point3D(0, 0, 11).getDistanceFromOrigin());
+        assertEquals(Math.sqrt(14.0), new Point3D(1, 2, 3).getDistanceFromOrigin());
     }
 
     @Test
     void whenGetDistance() {
-        assertEquals(new Point3D(77, 0, 0).getDistance(new Point3D(55, 0, 0)), 22);
-        assertEquals(new Point3D(0, 55, 0).getDistance(new Point3D(0, 11, 0)), 44);
-        assertEquals(new Point3D(0, 0, 11).getDistance(new Point3D(0, 0, 77)), 66);
-        assertEquals(new Point3D(1, 2, 3).getDistance(new Point3D(4, 5, 6)), Math.sqrt(3 * 3 + 3 * 3 + 3 * 3));
+        assertEquals(22, new Point3D(77, 0, 0).getDistance(new Point3D(55, 0, 0)));
+        assertEquals(44, new Point3D(0, 55, 0).getDistance(new Point3D(0, 11, 0)));
+        assertEquals(66, new Point3D(0, 0, 11).getDistance(new Point3D(0, 0, 77)));
+        assertEquals(Math.sqrt(3 * 3 + 3 * 3 + 3 * 3), new Point3D(1, 2, 3).getDistance(new Point3D(4, 5, 6)));
+    }
+
+    @Test
+    void whenGetSquaredDistance() {
+        assertEquals(22 * 22, new Point3D(77, 0, 0).getSquaredDistance(new Point3D(55, 0, 0)));
+        assertEquals(44 * 44, new Point3D(0, 55, 0).getSquaredDistance(new Point3D(0, 11, 0)));
+        assertEquals(66 * 66, new Point3D(0, 0, 11).getSquaredDistance(new Point3D(0, 0, 77)));
+        assertEquals(3 * 3 + 3 * 3 + 3 * 3, new Point3D(1, 2, 3).getSquaredDistance(new Point3D(4, 5, 6)));
     }
 
     @Test

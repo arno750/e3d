@@ -46,10 +46,14 @@ public class Box extends Volume {
      * @param vertexFactory
      */
     private void splitTriangle(Vertex a, Vertex b, Vertex c, int steps, Map<Integer, Vertex> map, VertexFactory vertexFactory) {
+        if (steps == 0) {
+            surfaces.add(new Surface(a, b, c));
+            return;
+        }
         Vertex mab = getMiddle(a, b, map, vertexFactory);
         Vertex mbc = getMiddle(b, c, map, vertexFactory);
         Vertex mac = getMiddle(a, c, map, vertexFactory);
-        if (steps <= 1) {
+        if (steps == 1) {
             surfaces.add(new Surface(a, mab, mac));
             surfaces.add(new Surface(b, mbc, mab));
             surfaces.add(new Surface(c, mac, mbc));

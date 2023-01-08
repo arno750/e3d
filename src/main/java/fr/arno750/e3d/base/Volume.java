@@ -1,15 +1,19 @@
 package fr.arno750.e3d.base;
 
 import fr.arno750.e3d.base.config.VolumeDefinition;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class Volume {
 
     protected String name;
     protected List<Vertex> vertices = new ArrayList<>();
     protected List<Surface> surfaces = new ArrayList<>();
+    protected Point3D center;
+    protected double radius;
 
     /**
      * @param definition
@@ -19,23 +23,6 @@ public class Volume {
         name = definition.getName();
     }
 
-    /**
-     * Returns the list of vertices.
-     *
-     * @return the vertices
-     */
-    public List<Vertex> getVertices() {
-        return vertices;
-    }
-
-    /**
-     * Returns the list of surfaces.
-     *
-     * @return the surfaces
-     */
-    public List<Surface> getSurfaces() {
-        return surfaces;
-    }
 
     /**
      * Returns the surface containing the two specified vertices and not being the given surface.
@@ -103,6 +90,75 @@ public class Volume {
         for (Vertex v : vertices) {
             v.n.normalize();
         }
+    }
+
+
+    /**
+     * Works out a bounding sphere.
+     * <p/>
+     * Retrieves the minimum and maximum values on each coordinate.
+     * Defines the center of the bounding sphere as the middle of minimum and maximum points and the radius as half the distance between minimum and maximum points (here calculated as the distance between the center and the minimum point)
+     * <p/>
+     * The sphere defined by the center and radius is in effect a bounding sphere for the volume. It is not the optimum bounding sphere. This algorithm runs in time O(n) on inputs consisting of n points.
+     *
+     * @see <a href="https://en.wikipedia.org/wiki/Smallest-circle_problem">Smallest-circle problem</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Bounding_sphere">Bounding sphere</a>
+     */
+    public void workOutBoundingSphere() {
+        Point3D min = new Point3D(vertices.get(0).p);
+        Point3D max = new Point3D(vertices.get(0).p);
+        for (Vertex v : vertices) {
+            min.x = Math.min(min.x, v.p.x);
+            min.y = Math.min(min.y, v.p.y);
+            min.z = Math.min(min.z, v.p.z);
+            max.x = Math.max(max.x, v.p.x);
+            max.y = Math.max(max.y, v.p.y);
+            max.z = Math.max(max.z, v.p.z);
+        }
+        this.center = Point3D.getMiddle(min, max);
+        this.radius = this.center.getDistance(min);
+    }
+
+    /**
+     * Works out a bounding sphere using Ritter's algorithm.
+     * <p/>
+     * This sphere is not the optimum bounding sphere but is usually close. This algorithm runs in time O(3n) on inputs consisting of n points in 3-dimensional space.
+     *
+     * @see <a href="https://en.wikipedia.org/wiki/Bounding_sphere">Bounding sphere</a>
+     */
+    public void workOutRitterBoundingSphere() {
+        Vertex x = vertices.get(0);
+        Vertex y = getFurthestVertex(x);
+        Vertex z = getFurthestVertex(y);
+        this.center = Point3D.getMiddle(y.p, z.p);
+        this.radius = y.p.getDistance(z.p) / 2.0;
+        double squareRadius = this.radius * this.radius;
+
+        for (Vertex v : vertices) {
+            double squaredDistance = v.p.getSquaredDistance(center);
+            if (squaredDistance <= squareRadius)
+                continue;
+
+            double distance = Math.sqrt(squaredDistance);
+            this.radius = (this.radius + distance) / 2.0;
+            double weight = distance - radius;
+            this.center.x = (this.center.x * radius + v.p.x * weight) / distance;
+            this.center.y = (this.center.y * radius + v.p.y * weight) / distance;
+            this.center.z = (this.center.z * radius + v.p.z * weight) / distance;
+        }
+    }
+
+    private Vertex getFurthestVertex(Vertex v0) {
+        double maximum = 0;
+        Vertex furthest = vertices.get(0);
+        for (Vertex v : vertices) {
+            double squaredDistance = v.p.getSquaredDistance(v0.p);
+            if (squaredDistance > maximum) {
+                maximum = squaredDistance;
+                furthest = v;
+            }
+        }
+        return furthest;
     }
 
 
