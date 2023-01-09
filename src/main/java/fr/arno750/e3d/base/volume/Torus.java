@@ -16,8 +16,14 @@ public class Torus extends Volume {
         super(definition, vertexFactory);
 
         double ratio = definition.getParameters().getRatio();
+        if (ratio <= 0.0)
+            throw new IllegalArgumentException(String.format("Ratio should be greater than 0"));
         int latitudes = definition.getParameters().getLatitudes();
+        if (latitudes < 4)
+            throw new IllegalArgumentException(String.format("Latitude count should be greater than or equal to 4"));
         int longitudes = definition.getParameters().getLongitudes();
+        if (longitudes < 4)
+            throw new IllegalArgumentException(String.format("Longitude count should be greater than or equal to 4"));
 
         // Adds vertices
         for (int i = 0; i < latitudes; i++) {

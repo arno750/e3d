@@ -16,7 +16,11 @@ public class Sphere extends Volume {
         super(definition, vertexFactory);
 
         int latitudes = definition.getParameters().getLatitudes();
+        if (latitudes < 4)
+            throw new IllegalArgumentException(String.format("Latitude count should be greater than or equal to 4"));
         int longitudes = definition.getParameters().getLongitudes();
+        if (longitudes < 4)
+            throw new IllegalArgumentException(String.format("Longitude count should be greater than or equal to 4"));
         int halfLatitudes = latitudes / 2;
         int halfLongitudes = longitudes / 2;
 
