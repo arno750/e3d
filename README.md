@@ -1,7 +1,5 @@
 # e3d
 
-[![GitLab CI](https://gitlab.com/arno750/e3d/badges/main/pipeline.svg)](https://gitlab.com/arno750/e3d/-/commits/main)
-
 3D engine (including renderer and viewer)
 
 ## Support
