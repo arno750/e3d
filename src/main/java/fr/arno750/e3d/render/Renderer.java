@@ -11,11 +11,16 @@ public class Renderer {
     Context context;
     Scene scene;
 
+    List<RenderedSurface> renderedSurfaces;
+    List<RenderedLine> renderedLines;
+
     /**
      * @param scene
      */
     public Renderer(Scene scene) {
         this.scene = scene;
+        renderedSurfaces = new ArrayList<>();
+        renderedLines = new ArrayList<>();
     }
 
     /**
@@ -25,11 +30,21 @@ public class Renderer {
         this.context = context;
     }
 
+    public List<RenderedSurface> getRenderedSurfaces() {
+        return renderedSurfaces;
+    }
+
+    public List<RenderedLine> getRenderedLines() {
+        return renderedLines;
+    }
+
     /**
      * @return
      */
-    public List<RenderedSurface> getSurfaces() {
-        List<RenderedSurface> renderedSurfaces = new ArrayList<>();
+    public void render() {
+        renderedSurfaces.clear();
+        renderedLines.clear();
+
         Map<Integer, Point> points = new HashMap<>();
         for (Volume volume : scene.getVolumes()) {
             for (Surface s : volume.getSurfaces()) {
@@ -40,12 +55,25 @@ public class Renderer {
                     Point b = getProjectedPoint(s.b, points);
                     Point c = getProjectedPoint(s.c, points);
                     renderedSurfaces.add(new RenderedSurface(o.getDistanceFromOrigin(), a, b, c, s.n));
+                    if(context.normal) {
+                        renderedLines.add(new RenderedLine(projectPoint(o), projectPoint(new Point3D(o, n.setLength(0.01))), Color.DARK_GRAY));
+                    }
                 }
             }
         }
         points.clear();
         Collections.sort(renderedSurfaces);
-        return renderedSurfaces;
+
+        if (context.axis) {
+            Point o = projectOriginalPoint(Point3D.ORIGIN);
+            Point ox = projectOriginalPoint(Point3D.X_UNIT);
+            Point oy = projectOriginalPoint(Point3D.Y_UNIT);
+            Point oz = projectOriginalPoint(Point3D.Z_UNIT);
+
+            renderedLines.add(new RenderedLine(o, ox, Color.red));
+            renderedLines.add(new RenderedLine(o, oy, Color.green));
+            renderedLines.add(new RenderedLine(o, oz, Color.blue));
+        }
     }
 
     /**
@@ -55,29 +83,19 @@ public class Renderer {
      */
     private Point getProjectedPoint(Vertex v, Map<Integer, Point> points) {
         Point pp = points.get(v.id);
-        if (pp !=null)
+        if (pp != null)
             return pp;
-        pp = projectPoint(v.p);
+        pp = projectOriginalPoint(v.p);
         points.put(v.id, pp);
         return pp;
     }
 
     /**
+     * @param p
      * @return
      */
-    public List<RenderedLine> getLines() {
-        List<RenderedLine> renderedLines = new ArrayList<>();
-
-        Point o = projectPoint(Point3D.ORIGIN);
-        Point ox = projectPoint(Point3D.X_UNIT);
-        Point oy = projectPoint(Point3D.Y_UNIT);
-        Point oz = projectPoint(Point3D.Z_UNIT);
-
-        renderedLines.add(new RenderedLine(o, ox, Color.red));
-        renderedLines.add(new RenderedLine(o, oy, Color.green));
-        renderedLines.add(new RenderedLine(o, oz, Color.blue));
-
-        return renderedLines;
+    public Point projectOriginalPoint(Point3D p) {
+        return projectPoint(Matrix.multiply(p, context.transform));
     }
 
     /**
@@ -85,7 +103,7 @@ public class Renderer {
      * @return
      */
     public Point projectPoint(Point3D p) {
-        return getAdjustedPoint(getScreenProjection(Matrix.multiply(p, context.transform)));
+        return getAdjustedPoint(getScreenProjection(p));
     }
 
     /**

@@ -29,6 +29,7 @@ public class CommandPanel extends JPanel {
     JButton center;
     JCheckBox autoCenter;
     JCheckBox axis;
+    JCheckBox normal;
     JCheckBox hiddenSurfaceRemoval;
     JCheckBox opaque;
 
@@ -175,6 +176,9 @@ public class CommandPanel extends JPanel {
         axis = new JCheckBox("Axis");
         panel.add(axis, constraints2.getNextColumn());
 
+        normal = new JCheckBox("Normals");
+        panel.add(normal, constraints2.getNextColumn());
+
         hiddenSurfaceRemoval = new JCheckBox("Hidden surface removal");
         panel.add(hiddenSurfaceRemoval, constraints2.getNextColumn());
 
@@ -189,6 +193,7 @@ public class CommandPanel extends JPanel {
             Controller.updateView();
         };
         axis.addActionListener(actionListener);
+        normal.addActionListener(actionListener);
         hiddenSurfaceRemoval.addActionListener(actionListener);
         opaque.addActionListener(actionListener);
 
@@ -257,6 +262,7 @@ public class CommandPanel extends JPanel {
         yaw.setValue(Math.toDegrees(context.gamma));
 
         axis.setSelected(context.axis);
+        normal.setSelected(context.normal);
         hiddenSurfaceRemoval.setSelected(context.hiddenSurfaceRemoval);
         opaque.setSelected(context.surfaceType == SurfaceType.OPAQUE);
     }
@@ -276,6 +282,7 @@ public class CommandPanel extends JPanel {
         context.gamma = Math.toRadians(yaw.getValue());
 
         context.axis = axis.isSelected();
+        context.normal = normal.isSelected();
         context.hiddenSurfaceRemoval = hiddenSurfaceRemoval.isSelected();
         context.surfaceType = opaque.isSelected() ? SurfaceType.OPAQUE : SurfaceType.MESH;
     }

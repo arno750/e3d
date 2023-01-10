@@ -33,7 +33,8 @@ public class Context {
 
     public Matrix transform;
 
-    public SurfaceType surfaceType = SurfaceType.MESH;
+    public SurfaceType surfaceType = SurfaceType.OPAQUE;
     public boolean hiddenSurfaceRemoval = true;
     public boolean axis = true;
+    public boolean normal = false;
 }

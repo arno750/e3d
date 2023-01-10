@@ -44,7 +44,9 @@ public class RenderingPanel extends JPanel {
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
 
-        for (RenderedSurface s : Controller.renderer.getSurfaces()) {
+        Controller.renderer.render();
+
+        for (RenderedSurface s : Controller.renderer.getRenderedSurfaces()) {
             int intensity = (int) (128.0 - s.n.k * 64.0);
             if (intensity > 255)
                 intensity = 255;
@@ -67,11 +69,9 @@ public class RenderingPanel extends JPanel {
             }
         }
 
-        if (context.axis) {
-            for (RenderedLine l : Controller.renderer.getLines()) {
-                graphics.setColor(l.c);
-                graphics.drawLine(l.a.x, l.a.y, l.b.x, l.b.y);
-            }
+        for (RenderedLine l : Controller.renderer.getRenderedLines()) {
+            graphics.setColor(l.c);
+            graphics.drawLine(l.a.x, l.a.y, l.b.x, l.b.y);
         }
     }
 }
