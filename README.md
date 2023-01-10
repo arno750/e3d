@@ -20,9 +20,13 @@ Every details about licence are in a [separate document](LICENSE).
 
 This implementation is freely based on the book: Watt A. (1993) _3D Computer Graphics_ (second edition). Addison-Wesley.
 
-It was realized in december 2011 for self educational purpose.
+It was realized in December 2011 for self-educational purpose.
 
-In december 2022 the project has been reviewed, fixed and documented.
+From December 2022 to January 2023 the project has been reviewed, fixed, optimized and documented.
+
+The Swing UI has been slightly improved:
+
+![Swing UI](images/SwingUI.png)
 
 ## Rendering examples
 
@@ -39,6 +43,10 @@ In december 2022 the project has been reviewed, fixed and documented.
 ![Bezier patch](images/BezierPatch.png)
 
 ![Bezier patch](images/BezierPatchMesh.png)
+
+### A Scene with surface normals
+
+![Scene with normals](images/SceneWithNormals.png)
 
 ## Affine transformations
 
